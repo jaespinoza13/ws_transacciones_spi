@@ -68,22 +68,6 @@ public class GenerarSpi1Handler : IRequestHandler<ReqGenerarSpi1, ResGenerarSpi1
                 respuesta.spi1_txt = Convert.ToBase64String( stream.ToArray() );
                 respuesta.spi1_md5 = Convert.ToBase64String( MD5.HashData( stream.ToArray() ) );
 
-                // using var zipStream = new MemoryStream();
-                // using (var spi1Txt = new ZipArchive( zipStream, ZipArchiveMode.Create, true ))
-                // {
-                //     var entry = spi1Txt.CreateEntry( $"{cabeceraSpi.str_nom_archivo_spi1}.txt" );
-                //
-                //     var data = stream.ToArray();
-                //
-                //     await using var entryStream = entry.Open();
-                //     await entryStream.WriteAsync( data, cancellationToken );
-                // }
-                //
-                // await using var fileStream = new FileStream( $"{cabeceraSpi.str_nom_archivo_spi1}.zip", FileMode.Create );
-                // zipStream.Seek( 0, SeekOrigin.Begin );
-                // await zipStream.CopyToAsync( fileStream, cancellationToken );
-                // respuesta.spi1_zip = Convert.ToBase64String( zipStream.ToArray() );
-
                 using var zipStream = new MemoryStream();
 
                 using (var spi1Txt = new ZipArchive( zipStream, ZipArchiveMode.Create, true ))

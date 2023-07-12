@@ -1,4 +1,6 @@
-﻿using System.IO.Compression;
+﻿using MediatR;
+using Microsoft.Extensions.Logging;
+using System.IO.Compression;
 using System.Reflection;
 using System.Security.Cryptography;
 using Application.Common.Converting;
@@ -6,9 +8,6 @@ using Application.Common.Interfaces;
 using Application.Common.Models;
 using Application.Persistence;
 using Domain.Entities.Spi1;
-using MediatR;
-using Microsoft.Extensions.Logging;
-using System;
 
 namespace Application.Features.Spi1.Command.GenerarSpi1;
 

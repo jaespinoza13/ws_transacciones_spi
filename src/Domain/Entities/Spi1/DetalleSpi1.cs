@@ -7,7 +7,7 @@ public class DetalleSpi1
     public string str_num_referencia { get; set; } = string.Empty;
     public int int_cod_origen_io { get; set; }
     public int int_cod_moneda { get; set; }
-    public string dec_monto_credito_opi { get; set; }  = string.Empty;
+    public string dec_monto_credito_opi { get; set; } = string.Empty;
     public int int_cod_concepto_opi { get; set; }
     public string str_cuenta_bce_ir { get; set; } = string.Empty;
     public string str_cuenta_co_io { get; set; } = string.Empty;
@@ -20,5 +20,5 @@ public class DetalleSpi1
     public string str_info_adicional_opi { get; set; } = string.Empty;
     public string str_ced_ruc_cb { get; set; } = string.Empty;
     public int int_estado_opi { get; set; }
-    
+
 }

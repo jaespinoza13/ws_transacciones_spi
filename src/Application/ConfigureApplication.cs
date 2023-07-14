@@ -14,8 +14,8 @@ public static class ConfigureApplication
         //SERVICIOS
         services.AddValidatorsFromAssembly( Assembly.GetExecutingAssembly() );
         services.AddValidatorsFromAssemblyContaining<Header>();
-        services.AddMediatR( cfg => cfg.RegisterServicesFromAssembly( typeof(ConfigureApplication).Assembly ) );
-        
+        services.AddMediatR( cfg => cfg.RegisterServicesFromAssembly( typeof( ConfigureApplication ).Assembly ) );
+
         services.AddTransient( typeof( IPipelineBehavior<,> ), typeof( UnhandledExceptionBehavior<,> ) );
         services.AddTransient( typeof( IPipelineBehavior<,> ), typeof( ValidationBehaviour<,> ) );
 

@@ -7,16 +7,16 @@ using Domain.Entities.Opis;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Application.Features.Opis.Queries.Buscar;
+namespace Application.Features.Opis.Queries.Detalle;
 
-public class BuscarOpisHandler : IRequestHandler<ReqBuscarOpis, ResBuscarOpis>
+public class DetalleOpiHandler : IRequestHandler<ReqDetalleOpi, ResDetalleOpi>
 {
     private readonly IOpisDat _opisDat;
     private readonly ILogs _logs;
     private readonly string _clase;
-    private readonly ILogger<BuscarOpisHandler> _logger;
+    private readonly ILogger<DetalleOpiHandler> _logger;
 
-    public BuscarOpisHandler(IOpisDat opisDat, ILogs logs, ILogger<BuscarOpisHandler> logger)
+    public DetalleOpiHandler(IOpisDat opisDat, ILogs logs, ILogger<DetalleOpiHandler> logger)
     {
         _opisDat = opisDat;
         _logs = logs;
@@ -24,25 +24,29 @@ public class BuscarOpisHandler : IRequestHandler<ReqBuscarOpis, ResBuscarOpis>
         _logger = logger;
     }
 
-    public async Task<ResBuscarOpis> Handle(ReqBuscarOpis request, CancellationToken cancellationToken)
+    public async Task<ResDetalleOpi> Handle(ReqDetalleOpi request, CancellationToken cancellationToken)
     {
-        var respuesta = new ResBuscarOpis();
+        var respuesta = new ResDetalleOpi();
 
-        const string strOperacion = "GET_BUSCAR_OPIS";
-
+        const string strOperacion = "GET_DETALLE_OPI";
         try
         {
             respuesta.LlenarResHeader( request );
 
             _ = _logs.SaveHeaderLogs( request, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
 
-            var respuestaTransaccion = await _opisDat.BuscarOpis( request );
+            var respuestaTransaccion = await _opisDat.DetalleOpi( request );
 
             if (respuestaTransaccion.codigo.Equals( "000" ))
             {
-                var ienumOpis = Conversions.ConvertToListClassDynamic<BuscarOpis>( (ConjuntoDatos)respuestaTransaccion.cuerpo );
+                var detalleOpi = Conversions.ConvertToClassDynamic<DetalleOpi>( (ConjuntoDatos)respuestaTransaccion.cuerpo );
 
-                respuesta.lst_opis = (List<BuscarOpis>)ienumOpis;
+                if (detalleOpi.str_tipo_ordenante.Equals( "CLIENTE" ))
+                {
+                    var ieCondiciones = Conversions.ConvertToListClassDynamic<FirmanteCuenta>( (ConjuntoDatos)respuestaTransaccion.cuerpo, 1 );
+                    respuesta.lst_condiciones = (List<FirmanteCuenta>)ieCondiciones;
+                }
+                respuesta.detalle_opi = detalleOpi;
             }
 
             respuesta.str_res_codigo = respuestaTransaccion.codigo;
@@ -52,7 +56,7 @@ public class BuscarOpisHandler : IRequestHandler<ReqBuscarOpis, ResBuscarOpis>
         catch (Exception e)
         {
             _ = _logs.SaveExceptionLogs( respuesta, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase, e );
-            _logger.LogError( e, "Error en BuscarOpisHandler" );
+            _logger.LogError( e, "Error en DetalleOpiHandler" );
             throw new ArgumentException( respuesta.str_id_transaccion );
         }
 

@@ -33,5 +33,5 @@ public class InfoLog
     /// <summary>
     /// Objeto de transacción (iso20022 o genérico)
     /// </summary>
-    public object str_objeto { get; set; } = new ();
+    public object str_objeto { get; set; } = new();
 }

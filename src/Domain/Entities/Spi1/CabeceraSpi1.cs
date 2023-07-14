@@ -11,5 +11,5 @@ public class CabeceraSpi1
     public string str_nom_archivo_spi1 { get; set; } = string.Empty;
     public DateTime dtt_hora_genera_spi1 { get; set; } = DateTime.Now;
     public string str_usuario_genera_spi1 { get; set; } = string.Empty;
-    
+
 }

@@ -21,13 +21,9 @@ public class UnhandledExceptionBehavior<TRequest, TResponse> : IPipelineBehavior
         }
         catch (Exception ex)
         {
-            var requestName = typeof(TRequest).Name;
+            var requestName = typeof( TRequest ).Name;
 
-            _logger.LogError(
-                ex,
-                "Application Request: Sucedio una exception para el request {Name} {@Request}",
-                requestName, request
-            );
+            _logger.LogError( ex, "Application Request: Sucedio una exception para el request {Name} {@Request}", requestName, request );
 
             throw;
         }

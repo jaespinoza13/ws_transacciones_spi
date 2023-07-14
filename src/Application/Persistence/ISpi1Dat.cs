@@ -5,5 +5,5 @@ namespace Application.Persistence;
 
 public interface ISpi1Dat
 {
-    Task<RespuestaTransaccion> GenerarSpi1( ReqGenerarSpi1 request );
+    Task<RespuestaTransaccion> GenerarSpi1(ReqGenerarSpi1 request);
 }

@@ -14,7 +14,7 @@ public static class Converting
 
             var targetProperty = destObject.GetProperty( key );
             if (targetProperty == null) continue;
-            if (targetProperty.PropertyType == typeof(string))
+            if (targetProperty.PropertyType == typeof( string ))
             {
                 targetProperty.SetValue( objResult, value );
             }
@@ -31,7 +31,7 @@ public static class Converting
     {
         var parseMethod = targetProperty.PropertyType.GetMethod( "TryParse",
             BindingFlags.Public | BindingFlags.Static, null,
-            new[] { typeof(string), targetProperty.PropertyType.MakeByRefType() }, null );
+            new[] { typeof( string ), targetProperty.PropertyType.MakeByRefType() }, null );
 
         if (parseMethod == null) return;
         var parameters = new[] { value, null };

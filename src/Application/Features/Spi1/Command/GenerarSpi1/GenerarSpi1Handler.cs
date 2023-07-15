@@ -43,20 +43,16 @@ public class GenerarSpi1Handler : IRequestHandler<ReqGenerarSpi1, ResGenerarSpi1
             {
                 var cabeceraSpi =
                     Conversions.ConvertToClassDynamic<CabeceraSpi1>( (ConjuntoDatos)respuestaTransaccion.cuerpo );
-                var detalleSpi =
-                    Conversions.ConvertToListClassDynamic<DetalleSpi1>( (ConjuntoDatos)respuestaTransaccion.cuerpo,
-                        1 );
+                var detalleSpi = Conversions.ConvertToListClassDynamic<DetalleSpi1>( (ConjuntoDatos)respuestaTransaccion.cuerpo, 1 );
                 var lstDetalleSpi = (List<DetalleSpi1>)detalleSpi;
 
                 using var stream = new MemoryStream();
                 await using var writer = new StreamWriter( stream );
-                var cabceraSpi1Txt =
-                    $"{cabeceraSpi.dtt_fecha_envio:dd/MM/yyyy HH:mm:ss},{cabeceraSpi.int_codigo_spi1},{cabeceraSpi.int_num_total_opi},{cabeceraSpi.dec_monto_total_opi},{cabeceraSpi.int_num_control},{cabeceraSpi.str_num_cuenta_io}";
+                var cabceraSpi1Txt = $"{cabeceraSpi.dtt_fecha_envio:dd/MM/yyyy HH:mm:ss},{cabeceraSpi.int_codigo_spi1},{cabeceraSpi.int_num_total_opi},{cabeceraSpi.dec_monto_total_opi},{cabeceraSpi.int_num_control},{cabeceraSpi.str_num_cuenta_io}";
 
                 await writer.WriteAsync( cabceraSpi1Txt );
                 await writer.WriteLineAsync();
-                foreach (var detalleSpiTxt in lstDetalleSpi.Select( detalle =>
-                             $"{detalle.dtt_fecha_registro_io:dd/MM/yyyy HH:mm:ss},{detalle.str_num_referencia},{detalle.int_cod_origen_io},{detalle.int_cod_moneda},{detalle.dec_monto_credito_opi},{detalle.int_cod_concepto_opi},{detalle.str_cuenta_bce_ir},{detalle.str_cuenta_co_io},{detalle.int_tipo_cuenta_co},{detalle.str_nombre_co},{detalle.str_lugar_opi_io},{detalle.str_cuenta_cb_ir},{detalle.int_tipo_cuenta_cb},{detalle.str_nombre_cb},{detalle.str_info_adicional_opi},{detalle.str_ced_ruc_cb}" ))
+                foreach (var detalleSpiTxt in lstDetalleSpi.Select( detalle => $"{detalle.dtt_fecha_registro_io:dd/MM/yyyy HH:mm:ss},{detalle.str_num_referencia},{detalle.int_cod_origen_io},{detalle.int_cod_moneda},{detalle.dec_monto_credito_opi},{detalle.int_cod_concepto_opi},{detalle.str_cuenta_bce_ir},{detalle.str_cuenta_co_io},{detalle.int_tipo_cuenta_co},{detalle.str_nombre_co},{detalle.str_lugar_opi_io},{detalle.str_cuenta_cb_ir},{detalle.int_tipo_cuenta_cb},{detalle.str_nombre_cb},{detalle.str_info_adicional_opi},{detalle.str_ced_ruc_cb}" ))
                 {
                     await writer.WriteLineAsync( detalleSpiTxt );
                 }

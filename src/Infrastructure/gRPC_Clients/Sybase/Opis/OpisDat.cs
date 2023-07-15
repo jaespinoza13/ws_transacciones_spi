@@ -5,6 +5,8 @@ using Application.Common.Interfaces;
 using Application.Common.Models;
 using Application.Features.Opis.Queries.Buscar;
 using Application.Features.Opis.Queries.Detalle;
+using Application.Features.Opis.Queries.Imprimir.OrdenPago;
+using Application.Features.Opis.Queries.Imprimir.Transferencias;
 using Application.Persistence;
 using Grpc.Net.Client;
 using Infrastructure.Common.Funciones;
@@ -73,7 +75,7 @@ public class OpisDat : IOpisDat
         }
         catch (Exception e)
         {
-            respuesta.codigo = "100";
+            respuesta.codigo = "001";
             respuesta.diccionario.Add( "Error", e.InnerException?.Message ?? e.Message );
             _logger.LogError( e, "Error en stored procedure get_search_transferencias" );
             _ = _logService.SaveExcepcionDataBaseSybase( request, MethodBase.GetCurrentMethod()!.Name, e, _clase );
@@ -109,9 +111,83 @@ public class OpisDat : IOpisDat
         }
         catch (Exception e)
         {
-            respuesta.codigo = "100";
+            respuesta.codigo = "001";
             respuesta.diccionario.Add( "Error", e.InnerException?.Message ?? e.Message );
             _logger.LogError( e, "Error en stored procedure get_detalle_opi_spi" );
+            _ = _logService.SaveExcepcionDataBaseSybase( request, MethodBase.GetCurrentMethod()!.Name, e, _clase );
+            throw new ArgumentException( request.str_id_transaccion );
+        }
+
+        return respuesta;
+    }
+
+    public async Task<RespuestaTransaccion> ImprimirOrden(ReqImprimirOrdenPago request)
+    {
+        var respuesta = new RespuestaTransaccion();
+        try
+        {
+            var ds = new DatosSolicitud();
+            Funciones.LlenarDatosAuditoriaSalida( ds, request );
+            ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@int_codigo_opi", TipoDato = TipoDato.Integer, ObjValue = request.int_codigo_opi.ToString() } );
+            ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@str_tipo_ordenante", TipoDato = TipoDato.VarChar, ObjValue = request.str_tipo_ordenante } );
+
+            ds.NombreSP = "get_detalle_opi_spi";
+            ds.NombreBD = _settings.DB_meg_bce;
+
+            var resultado = await _objClienteDal.ExecuteDataSetAsync( ds );
+            var lstValores = resultado.ListaPSalidaValores.ToList();
+
+            var strCodigo = lstValores.Find( x => x.StrNameParameter == "@int_o_error_cod" )!.ObjValue;
+            var strError = lstValores.Find( x => x.StrNameParameter == "@str_o_error" )!.ObjValue.Trim();
+
+            respuesta.codigo = strCodigo.Trim().PadLeft( 3, '0' );
+            respuesta.cuerpo = Funciones.ObtenerDatos( resultado );
+            respuesta.diccionario.Add( "Error", strError );
+
+        }
+        catch (Exception e)
+        {
+            respuesta.codigo = "001";
+            respuesta.diccionario.Add( "Error", e.InnerException?.Message ?? e.Message );
+            _logger.LogError( e, "Error en stored procedure get_detalle_opi_spi" );
+            _ = _logService.SaveExcepcionDataBaseSybase( request, MethodBase.GetCurrentMethod()!.Name, e, _clase );
+            throw new ArgumentException( request.str_id_transaccion );
+        }
+
+        return respuesta;
+    }
+
+    public async Task<RespuestaTransaccion> ImprimirTransferencia(ReqImprimirTransferencia request)
+    {
+        var respuesta = new RespuestaTransaccion();
+        var storedProcedure = request.str_tipo_persona == "J" ? "get_autorizacion_transf_ext_pj" : "get_autorizacion_transf_ext_pn";
+        try
+        {
+            var ds = new DatosSolicitud();
+            Funciones.LlenarDatosAuditoriaSalida( ds, request );
+            ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@int_codigo_opi", TipoDato = TipoDato.Integer, ObjValue = request.int_codigo_opi.ToString() } );
+            ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@str_tipo_ordenante", TipoDato = TipoDato.VarChar, ObjValue = request.str_tipo_ordenante } );
+            ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@dec_val_comision", TipoDato = TipoDato.Decimal, ObjValue = request.dec_valor_comision.ToString( CultureInfo.CurrentCulture ) } );
+
+
+            ds.NombreSP = storedProcedure;
+            ds.NombreBD = _settings.DB_meg_bce;
+
+            var resultado = await _objClienteDal.ExecuteDataSetAsync( ds );
+            var lstValores = resultado.ListaPSalidaValores.ToList();
+
+            var strCodigo = lstValores.Find( x => x.StrNameParameter == "@int_o_error_cod" )!.ObjValue;
+            var strError = lstValores.Find( x => x.StrNameParameter == "@str_o_error" )!.ObjValue.Trim();
+
+            respuesta.codigo = strCodigo.Trim().PadLeft( 3, '0' );
+            respuesta.cuerpo = Funciones.ObtenerDatos( resultado );
+            respuesta.diccionario.Add( "Error", strError );
+        }
+        catch (Exception e)
+        {
+            respuesta.codigo = "001";
+            respuesta.diccionario.Add( "Error", e.InnerException?.Message ?? e.Message );
+            _logger.LogError( e, "Error en stored procedure {StoredProcedure}", storedProcedure );
             _ = _logService.SaveExcepcionDataBaseSybase( request, MethodBase.GetCurrentMethod()!.Name, e, _clase );
             throw new ArgumentException( request.str_id_transaccion );
         }

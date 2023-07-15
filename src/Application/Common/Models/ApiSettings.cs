@@ -47,4 +47,6 @@ public class ApiSettings
     public string auth_ws_otp { get; set; } = string.Empty;
 
     public int mostrar_descripcion_badrequest { get; set; }
+    
+    public string path_logo_png { get; set; } = string.Empty;
 }

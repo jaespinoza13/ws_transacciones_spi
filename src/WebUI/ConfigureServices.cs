@@ -30,19 +30,20 @@ public static class ConfigureServices
                 .AllowAnyHeader()
             );
         } );
-
-
-        //AUTHORIZATION
+        
+        
+        //AUTHORIZATION 
         var issuer = configuration.GetValue<string>( "issuer" );
-        var publicKeyBytes = Convert.FromBase64String( configuration.GetValue<string>( "Key_token_pub" )! );
+        var keyTokenPub = configuration.GetValue<string>( "Key_token_pub" )!;
+        var keyEncryptToken = configuration.GetValue<string>( "Key_encrypt_token" )!;
+        
+        var publicKeyBytes = Convert.FromBase64String( keyTokenPub );
         var rsa = RSA.Create();
         rsa.ImportSubjectPublicKeyInfo( publicKeyBytes, out _ );
         var keyRsa = new RsaSecurityKey( rsa );
 
-        var securityKeyDecrypt =
-            new SymmetricSecurityKey(
-                Encoding.Default.GetBytes( configuration.GetValue<string>( "Key_encrypt_token" )! ) );
-
+        var securityKeyDecrypt = new SymmetricSecurityKey( Encoding.Default.GetBytes( keyEncryptToken ) );
+        
 
         services.AddAuthentication( JwtBearerDefaults.AuthenticationScheme )
             .AddJwtBearer( opciones => opciones.TokenValidationParameters = new TokenValidationParameters
@@ -56,7 +57,6 @@ public static class ConfigureServices
                 TokenDecryptionKey = securityKeyDecrypt,
                 ClockSkew = TimeSpan.Zero
             } );
-
 
         //SERVICES
         services.AddDataProtection();

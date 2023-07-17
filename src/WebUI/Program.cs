@@ -48,6 +48,7 @@ app.UseCors( "CorsPolicy" );
 
 app.UseAuthotizationMego();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseHttpsRedirection();

@@ -1,15 +1,16 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using MediatR;
+﻿using System.Net;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using MediatR;
+
+using WebUI.Filters;
+using Domain.Types;
 using Application.Common.ISO20022.Models;
 using Application.Features.Opis.Queries.Buscar;
 using Application.Features.Opis.Queries.Detalle;
 using Application.Features.Opis.Queries.Imprimir.OrdenPago;
 using Application.Features.Opis.Queries.Imprimir.Transferencias;
-using Domain.Types;
-using WebUI.Filters;
 
 
 namespace WebUI.Controllers;

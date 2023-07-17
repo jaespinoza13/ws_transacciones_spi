@@ -30,20 +30,20 @@ public static class ConfigureServices
                 .AllowAnyHeader()
             );
         } );
-        
-        
+
+
         //AUTHORIZATION 
         var issuer = configuration.GetValue<string>( "issuer" );
         var keyTokenPub = configuration.GetValue<string>( "Key_token_pub" )!;
         var keyEncryptToken = configuration.GetValue<string>( "Key_encrypt_token" )!;
-        
+
         var publicKeyBytes = Convert.FromBase64String( keyTokenPub );
         var rsa = RSA.Create();
         rsa.ImportSubjectPublicKeyInfo( publicKeyBytes, out _ );
         var keyRsa = new RsaSecurityKey( rsa );
 
         var securityKeyDecrypt = new SymmetricSecurityKey( Encoding.Default.GetBytes( keyEncryptToken ) );
-        
+
 
         services.AddAuthentication( JwtBearerDefaults.AuthenticationScheme )
             .AddJwtBearer( opciones => opciones.TokenValidationParameters = new TokenValidationParameters

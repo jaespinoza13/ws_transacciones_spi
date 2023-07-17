@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using MediatR;
+﻿using System.Net;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using MediatR;
+
 using Application.Common.ISO20022.Models;
 using Domain.Types;
 using WebUI.Filters;

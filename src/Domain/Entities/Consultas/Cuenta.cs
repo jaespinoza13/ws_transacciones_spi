@@ -10,6 +10,7 @@ public class Cuenta
     public string str_nombre_cuenta { get; set; } = string.Empty;
     public string int_id_cuenta { get; set; } = string.Empty;
     public string str_id_cuenta { get; set; } = string.Empty;
+    
     public string str_num_cuenta { get; set; } = string.Empty;
     public string str_num_cuenta_enmascarada { get; set; } = string.Empty;
     public string str_tipo_persona { get; set; } = string.Empty;

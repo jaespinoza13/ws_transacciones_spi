@@ -14,7 +14,7 @@ public class Cuenta
     public string str_num_cuenta_enmascarada { get; set; } = string.Empty;
     public string str_tipo_persona { get; set; } = string.Empty;
     public string dec_monto { get; set; } = string.Empty;
-    public string srt_cta_estado { get; set; } = string.Empty;
+    public string str_cta_estado { get; set; } = string.Empty;
     public bool bit_cta_estado { get; set; }
     public string str_telefono { get; set; } = string.Empty;
     public string str_email { get; set; } = string.Empty;

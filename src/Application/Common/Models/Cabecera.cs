@@ -13,4 +13,3 @@ public class Cabecera
     public string str_mac { get; set; } = string.Empty;
     public string str_nombre_canal { get; set; } = string.Empty;
 }
-

@@ -3,7 +3,6 @@ using Application.Common.Converting;
 using Application.Common.Interfaces;
 using Application.Common.Models;
 using Application.Features.Opis.Queries.Imprimir.Transferencias.Common;
-using Application.Persistence;
 using Domain.Entities.Opis;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -17,38 +16,40 @@ public class ImprimirTransferenciaHandler : IRequestHandler<ReqImprimirTransfere
     private readonly ILogs _logs;
     private readonly string _clase;
     private readonly ILogger<ImprimirTransferenciaHandler> _logger;
-    private readonly ApiSettings _settings;
+    private readonly ApiConfig _apiConfig;
 
-    public ImprimirTransferenciaHandler(IOpisDat opisDat, ILogs logs, ILogger<ImprimirTransferenciaHandler> logger, IOptionsMonitor<ApiSettings> settings)
+    public ImprimirTransferenciaHandler(IOpisDat opisDat, ILogs logs, ILogger<ImprimirTransferenciaHandler> logger, IOptionsMonitor<ApiConfig> apiConfig)
     {
         _opisDat = opisDat;
         _logs = logs;
         _clase = GetType().Name;
         _logger = logger;
-        _settings = settings.CurrentValue;
+        _apiConfig = apiConfig.CurrentValue;
     }
 
-    public async Task<ResImprimirTransferencia> Handle(ReqImprimirTransferencia request, CancellationToken cancellationToken)
+
+    public async Task<ResImprimirTransferencia> Handle(ReqImprimirTransferencia request,
+        CancellationToken cancellationToken)
     {
         var respuesta = new ResImprimirTransferencia();
         const string strOperacion = "GET_IMPRIMIR_TRANSFERENCIA";
         try
         {
-            respuesta.LlenarResHeader( request );
-            _ = _logs.SaveHeaderLogs( request, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
+            respuesta.LlenarResHeader(request);
+            _ = _logs.SaveHeaderLogs(request, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase);
 
-            var respuestaTransaccion = await _opisDat.ImprimirTransferencia( request );
+            var respuestaTransaccion = await _opisDat.ImprimirTransferencia(request);
 
-            if (respuestaTransaccion.codigo.Equals( "000" ))
+            if (respuestaTransaccion.codigo.Equals("000"))
             {
-                var autorizacion = Conversions.ConvertToClassDynamic<AutorizacionTransfExterna>((ConjuntoDatos)respuestaTransaccion.cuerpo );
+                var autorizacion = Conversions.ConvertToClassDynamic<AutorizacionTransfExterna>((ConjuntoDatos)respuestaTransaccion.cuerpo);
 
                 var bytes = request.str_tipo_persona switch
                 {
-                    "N" => Autorizacion.GenerarAutorizacionPersonaNatural( autorizacion, _settings ),
-                    _ => Autorizacion.GenerarAutorizacionPersonaJuridica( autorizacion, _settings )
+                    "N" => Autorizacion.GenerarAutorizacionPersonaNatural(autorizacion, _apiConfig),
+                    _ => Autorizacion.GenerarAutorizacionPersonaJuridica(autorizacion, _apiConfig)
                 };
-                
+
                 if (bytes.Length > 0)
                 {
                     respuesta.autorizacion.file_bytes = bytes;
@@ -63,15 +64,15 @@ public class ImprimirTransferenciaHandler : IRequestHandler<ReqImprimirTransfere
                     respuesta.str_res_codigo = "999";
                     respuesta.str_res_info_adicional = "Error al generar la autorización";
                 }
-
             }
-            _ = _logs.SaveResponseLogs( respuesta, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
+
+            _ = _logs.SaveResponseLogs(respuesta, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase);
         }
         catch (Exception e)
         {
-            _ = _logs.SaveExceptionLogs( respuesta, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase, e );
-            _logger.LogError( e, "Error en ImprimirTransferenciaHandler" );
-            throw new ArgumentException( respuesta.str_id_transaccion );
+            _ = _logs.SaveExceptionLogs(respuesta, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase, e);
+            _logger.LogError(e, "Error en ImprimirTransferenciaHandler");
+            throw new ArgumentException(respuesta.str_id_transaccion);
         }
 
         return respuesta;

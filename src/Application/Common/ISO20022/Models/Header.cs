@@ -1,4 +1,4 @@
-using Application.Common.Cryptography;
+﻿using Application.Common.Cryptography;
 using System.ComponentModel.DataAnnotations;
 
 namespace Application.Common.ISO20022.Models;
@@ -11,7 +11,7 @@ public class Header
     public string str_id_transaccion { get; set; } = string.Empty;
 
     /// <summary>
-    /// Enete del socio
+    /// Ente del socio
     /// </summary>
     [Required( ErrorMessage = "Ente es requerido" )]
     public string str_ente { get; set; } = string.Empty;
@@ -174,17 +174,17 @@ public class Header
     public string str_id_perfil { get; set; } = string.Empty;
 
 
-    public void EncryptAesHeader(ResGetKeys Key)
+    public void EncryptAesHeader(ResGetKeys key)
     {
-        str_ente = CryptographyAes.Encrypt( str_ente, Key.str_llave_simetrica );
-        str_id_usuario = CryptographyAes.Encrypt( str_id_usuario, Key.str_llave_simetrica );
-        str_login = CryptographyAes.Encrypt( str_login, Key.str_llave_simetrica );
+        str_ente = CryptographyAes.Encrypt( str_ente, key.str_llave_simetrica );
+        str_id_usuario = CryptographyAes.Encrypt( str_id_usuario, key.str_llave_simetrica );
+        str_login = CryptographyAes.Encrypt( str_login, key.str_llave_simetrica );
     }
 
-    public void DecryptAesHeader(ResGetKeys Key)
+    public void DecryptAesHeader(ResGetKeys key)
     {
-        str_ente = CryptographyAes.Decrypt( str_ente, Key.str_llave_simetrica );
-        str_id_usuario = CryptographyAes.Decrypt( str_id_usuario, Key.str_llave_simetrica );
-        str_login = CryptographyAes.Decrypt( str_login, Key.str_llave_simetrica );
+        str_ente = CryptographyAes.Decrypt( str_ente, key.str_llave_simetrica );
+        str_id_usuario = CryptographyAes.Decrypt( str_id_usuario, key.str_llave_simetrica );
+        str_login = CryptographyAes.Decrypt( str_login, key.str_llave_simetrica );
     }
 }

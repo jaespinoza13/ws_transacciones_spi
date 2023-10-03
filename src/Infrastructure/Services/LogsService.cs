@@ -1,7 +1,7 @@
 ﻿using Application.Common.Interfaces;
 using Application.Common.Models;
 using Infrastructure.Common.Tramas;
-using Infrastructure.gRPC_Clients.Mongo;
+using Infrastructure.GrpcClients.Mongo;
 using Microsoft.Extensions.Options;
 
 namespace Infrastructure.Services;
@@ -9,17 +9,17 @@ namespace Infrastructure.Services;
 public class LogsService : ILogs
 {
     private readonly InfoLog _infoLog = new();
-    private readonly ApiSettings _settings;
+    private readonly ApiConfig _settings;
     private readonly IMongoDat _mongoDat;
 
-    public LogsService(IOptionsMonitor<ApiSettings> options, IMongoDat mongoDat)
+    public LogsService(IOptionsMonitor<ApiConfig> options, IMongoDat mongoDat)
     {
         _settings = options.CurrentValue;
         _mongoDat = mongoDat;
     }
 
     /// <summary>
-    /// Guarda en mongodb la cabecera de la petición
+    /// Guardar en mongodb la cabecera de la petición
     /// </summary>
     /// <param name="transaction"></param>
     /// <param name="strOperacion"></param>
@@ -37,15 +37,15 @@ public class LogsService : ILogs
         _infoLog.str_fecha = transaction.dt_fecha_operacion;
         _infoLog.str_tipo = "s:<";
 
-        // REGISTRA LOGS DE TEXTO
-        TextFiles.RegistrarTramas( _infoLog.str_tipo, _infoLog, _settings.logs_path_peticiones );
+        // REGISTRAR LOGS DE TEXTO
+        TextFiles.RegistrarTramas(_infoLog.str_tipo, _infoLog, _settings.logs_path_peticiones);
 
-        // REGISTRA LOGS DE MONGO
-        await _mongoDat.GuardarCabeceraMongo( transaction );
+        // REGISTRAR LOGS DE MONGO
+        await _mongoDat.GuardarCabeceraMongo(transaction);
     }
 
     /// <summary>
-    /// Guarda en mongodb la respuesta de la petición
+    /// Guardar en mongodb la respuesta de la petición
     /// </summary>
     /// <param name="transaction"></param>
     /// <param name="strOperacion"></param>
@@ -63,15 +63,15 @@ public class LogsService : ILogs
         _infoLog.str_fecha = transaction.dt_fecha_operacion;
         _infoLog.str_tipo = "r:>";
 
-        // REGISTRA LOGS DE TEXTO
-        TextFiles.RegistrarTramas( _infoLog.str_tipo, _infoLog, _settings.logs_path_peticiones );
+        // REGISTRAR LOGS DE TEXTO
+        TextFiles.RegistrarTramas(_infoLog.str_tipo, _infoLog, _settings.logs_path_peticiones);
 
-        // REGISTRA LOGS DE MONGO
-        await _mongoDat.GuardarRespuestaMongo( transaction );
+        // REGISTRAR LOGS DE MONGO
+        await _mongoDat.GuardarRespuestaMongo(transaction);
     }
 
     /// <summary>
-    /// Guarda exepciones de codigo
+    /// Guardar excepciones de codigo
     /// </summary>
     /// <param name="transaction"></param>
     /// <param name="strOperacion"></param>
@@ -80,7 +80,8 @@ public class LogsService : ILogs
     /// <param name="objError"></param>
     /// <returns></returns>
     ///
-    public async Task SaveExceptionLogs(dynamic transaction, string strOperacion, string strMetodo, string strClase,object objError)
+    public async Task SaveExceptionLogs(dynamic transaction, string strOperacion, string strMetodo, string strClase,
+        object objError)
     {
         var objSave = new { peticion = transaction, error = objError };
         _infoLog.str_id_transaccion = transaction.str_id_transaccion;
@@ -91,14 +92,15 @@ public class LogsService : ILogs
         _infoLog.str_fecha = transaction.dt_fecha_operacion;
         _infoLog.str_tipo = "e:<";
 
-        // REGISTRA LOGS DE TEXTO
-        TextFiles.RegistrarTramas( _infoLog.str_tipo, _infoLog, _settings.logs_path_errores );
+        // REGISTRAR LOGS DE TEXTO
+        TextFiles.RegistrarTramas(_infoLog.str_tipo, _infoLog, _settings.logs_path_errores);
 
-        //REGISTRA LOGS DE MONGO
-        await _mongoDat.GuardarExcepcionesMongo( transaction, objError );
+        //REGISTRAR LOGS DE MONGO
+        await _mongoDat.GuardarExcepcionesMongo(transaction, objError);
     }
 
-    public async Task SaveAmenazasLogs(ValidacionInyeccion validacion, string strOperacion, string strMetodo,string strClase)
+    public async Task SaveAmenazasLogs(ValidacionInyeccion validacion, string strOperacion, string strMetodo,
+        string strClase)
     {
         _infoLog.str_clase = strClase;
         _infoLog.str_operacion = strOperacion;
@@ -108,15 +110,15 @@ public class LogsService : ILogs
         _infoLog.str_id_transaccion = validacion.idHeader;
         _infoLog.str_tipo = "s:<";
 
-        // REGISTRA LOGS DE TEXTO
-        TextFiles.RegistrarTramas( _infoLog.str_tipo, _infoLog, _settings.logs_path_amenazas );
+        // REGISTRAR LOGS DE TEXTO
+        TextFiles.RegistrarTramas(_infoLog.str_tipo, _infoLog, _settings.logs_path_amenazas);
 
-        //REGISTRA LOGS DE MONGO
-        await _mongoDat.GuardarAmenazasMongo( validacion );
+        //REGISTRAR LOGS DE MONGO
+        await _mongoDat.GuardarAmenazasMongo(validacion);
     }
 
     /// <summary>
-    /// Guarda cualquier error
+    /// Guardar cualquier error
     /// </summary>
     /// <param name="transaction"></param>
     /// <param name="strMetodo"></param>
@@ -137,11 +139,11 @@ public class LogsService : ILogs
         _infoLog.str_fecha = DateTime.Now;
         _infoLog.str_tipo = "e:<";
 
-        //REGISTRA LOGS DE TEXTO
-        TextFiles.RegistrarTramas( _infoLog.str_tipo, _infoLog, _settings.logs_path_errores_http );
+        //REGISTRAR LOGS DE TEXTO
+        TextFiles.RegistrarTramas(_infoLog.str_tipo, _infoLog, _settings.logs_path_errores_http);
 
-        //REGISTRA LOGS DE MONGO
-        await _mongoDat.GuardaErroresHttp( transaction, objError, strIdTransaccion );
+        //REGISTRAR LOGS DE MONGO
+        await _mongoDat.GuardarErroresHttp(transaction, objError, strIdTransaccion);
     }
 
     public async Task SaveExcepcionDataBaseSybase(dynamic transaction, string strMetodo, Exception excepcion,
@@ -155,10 +157,10 @@ public class LogsService : ILogs
         _infoLog.str_fecha = transaction.dt_fecha_operacion;
         _infoLog.str_tipo = "e:<";
 
-        //REGISTRA LOGS DE TEXTO
-        TextFiles.RegistrarTramas( _infoLog.str_tipo, _infoLog, _settings.logs_path_errores_db );
+        //REGISTRAR LOGS DE TEXTO
+        TextFiles.RegistrarTramas(_infoLog.str_tipo, _infoLog, _settings.logs_path_errores_db);
 
-        //REGISTRA LOGS DE MONGO
-        await _mongoDat.GuardarExcepcionesDataBase( transaction, excepcion );
+        //REGISTRAR LOGS DE MONGO
+        await _mongoDat.GuardarExcepcionesDataBase(transaction, excepcion);
     }
 }

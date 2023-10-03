@@ -2,7 +2,6 @@
 using Application.Common.Converting;
 using Application.Common.Interfaces;
 using Application.Common.Models;
-using Application.Persistence;
 using Domain.Entities.Opis;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -32,28 +31,28 @@ public class BuscarOpisHandler : IRequestHandler<ReqBuscarOpis, ResBuscarOpis>
 
         try
         {
-            respuesta.LlenarResHeader( request );
+            respuesta.LlenarResHeader(request);
 
-            _ = _logs.SaveHeaderLogs( request, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
+            _ = _logs.SaveHeaderLogs(request, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase);
 
-            var respuestaTransaccion = await _opisDat.BuscarOpis( request );
+            var respuestaTransaccion = await _opisDat.BuscarOpis(request);
 
-            if (respuestaTransaccion.codigo.Equals( "000" ))
+            if (respuestaTransaccion.codigo.Equals("000"))
             {
-                var ienumOpis = Conversions.ConvertToListClassDynamic<BuscarOpis>( (ConjuntoDatos)respuestaTransaccion.cuerpo );
+                var opis = Conversions.ConvertToListClassDynamic<BuscarOpis>((ConjuntoDatos)respuestaTransaccion.cuerpo);
 
-                respuesta.lst_opis = (List<BuscarOpis>)ienumOpis;
+                respuesta.lst_opis = (List<BuscarOpis>)opis;
             }
 
             respuesta.str_res_codigo = respuestaTransaccion.codigo;
-            respuesta.str_res_info_adicional = respuestaTransaccion.diccionario["Error"];
-            _ = _logs.SaveResponseLogs( respuesta, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
+            respuesta.str_res_info_adicional = respuestaTransaccion.diccionario["str_error"];
+            _ = _logs.SaveResponseLogs(respuesta, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase);
         }
         catch (Exception e)
         {
-            _ = _logs.SaveExceptionLogs( respuesta, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase, e );
-            _logger.LogError( e, "Error en BuscarOpisHandler" );
-            throw new ArgumentException( respuesta.str_id_transaccion );
+            _ = _logs.SaveExceptionLogs(respuesta, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase, e);
+            _logger.LogError(e, "Error en BuscarOpisHandler");
+            throw new ArgumentException(respuesta.str_id_transaccion);
         }
 
         return respuesta;

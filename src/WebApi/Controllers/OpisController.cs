@@ -13,10 +13,10 @@ using WebApi.Filters;
 
 namespace WebApi.Controllers;
 
-// [Authorize( AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = Rol.SocioInvitadoInterno )]
-// [ServiceFilter( typeof( CryptographyAesFilter ) )]
-// [ServiceFilter( typeof( ClaimControlFilter ) )]
-// [ServiceFilter( typeof( SessionControlFilter ) )]
+[Authorize( AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = Rol.SocioInvitadoInterno )]
+[ServiceFilter( typeof( CryptographyAesFilter ) )]
+[ServiceFilter( typeof( ClaimControlFilter ) )]
+[ServiceFilter( typeof( SessionControlFilter ) )]
 [ProducesResponseType(typeof(ResBadRequestException), (int)HttpStatusCode.BadRequest)]
 [ProducesResponseType(typeof(ResException), (int)HttpStatusCode.Unauthorized)]
 [ProducesResponseType(typeof(ResException), (int)HttpStatusCode.InternalServerError)]

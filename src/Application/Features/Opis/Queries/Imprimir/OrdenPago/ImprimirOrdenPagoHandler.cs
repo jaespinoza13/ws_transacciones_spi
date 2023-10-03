@@ -3,7 +3,6 @@ using Application.Common.Converting;
 using Application.Common.Interfaces;
 using Application.Common.Models;
 using Application.Features.Opis.Queries.Imprimir.OrdenPago.Common;
-using Application.Persistence;
 using Domain.Entities.Opis;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -17,18 +16,18 @@ public class ImprimirOrdenPagoHandler : IRequestHandler<ReqImprimirOrdenPago, Re
     private readonly ILogs _logs;
     private readonly string _clase;
     private readonly ILogger<ImprimirOrdenPagoHandler> _logger;
-    private readonly ApiSettings _settings;
-    
-    public ImprimirOrdenPagoHandler(IOpisDat opisDat, ILogs logs, ILogger<ImprimirOrdenPagoHandler> logger, IOptionsMonitor<ApiSettings> settings)
+    private readonly ApiConfig _apiConfig;
+
+    public ImprimirOrdenPagoHandler(IOpisDat opisDat, ILogs logs, ILogger<ImprimirOrdenPagoHandler> logger, IOptionsMonitor<ApiConfig> apiConfig)
     {
         _opisDat = opisDat;
         _logs = logs;
         _clase = GetType().Name;
         _logger = logger;
-        _settings = settings.CurrentValue;
+        _apiConfig = apiConfig.CurrentValue;
     }
 
-    
+
     public async Task<ResImprimirOrdenPago> Handle(ReqImprimirOrdenPago request, CancellationToken cancellationToken)
     {
         var respuesta = new ResImprimirOrdenPago();
@@ -36,23 +35,24 @@ public class ImprimirOrdenPagoHandler : IRequestHandler<ReqImprimirOrdenPago, Re
         const string strOperacion = "GET_DETALLE_OPI";
         try
         {
-            respuesta.LlenarResHeader( request );
+            respuesta.LlenarResHeader(request);
 
-            _ = _logs.SaveHeaderLogs( request, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
+            _ = _logs.SaveHeaderLogs(request, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase);
 
-            var respuestaTransaccion = await _opisDat.ImprimirOrden( request );
+            var respuestaTransaccion = await _opisDat.ImprimirOrden(request);
 
-            if (respuestaTransaccion.codigo.Equals( "000" ))
+            if (respuestaTransaccion.codigo.Equals("000"))
             {
-                var detalleOpi = Conversions.ConvertToClassDynamic<DetalleOpi>( (ConjuntoDatos)respuestaTransaccion.cuerpo );
-                
-                
+                var detalleOpi =
+                    Conversions.ConvertToClassDynamic<DetalleOpi>((ConjuntoDatos)respuestaTransaccion.cuerpo);
+
+
                 var bytes = request.str_tipo_ordenante switch
                 {
-                    "PROVEEDOR" => Autorizacion.GenerarOrdenPago( detalleOpi, _settings ),
-                    _ => Autorizacion.GenerarInterbancaria( detalleOpi, _settings )
+                    "PROVEEDOR" => Autorizacion.GenerarOrdenPago(detalleOpi, _apiConfig),
+                    _ => Autorizacion.GenerarInterbancaria(detalleOpi, _apiConfig)
                 };
-                
+
                 if (bytes.Length > 0)
                 {
                     respuesta.autorizacion.file_bytes = bytes;
@@ -67,16 +67,15 @@ public class ImprimirOrdenPagoHandler : IRequestHandler<ReqImprimirOrdenPago, Re
                     respuesta.str_res_codigo = "999";
                     respuesta.str_res_info_adicional = "Error al generar la autorización";
                 }
-                
             }
-            
-            _ = _logs.SaveResponseLogs( respuesta, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
+
+            _ = _logs.SaveResponseLogs(respuesta, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase);
         }
         catch (Exception e)
         {
-            _ = _logs.SaveExceptionLogs( respuesta, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase, e );
-            _logger.LogError( e, "Error en ImprimirOrdenPagoHandler" );
-            throw new ArgumentException( respuesta.str_id_transaccion );
+            _ = _logs.SaveExceptionLogs(respuesta, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase, e);
+            _logger.LogError(e, "Error en ImprimirOrdenPagoHandler");
+            throw new ArgumentException(respuesta.str_id_transaccion);
         }
 
         return respuesta;

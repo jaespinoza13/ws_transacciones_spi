@@ -1,16 +1,17 @@
 ﻿using Application.Common.Interfaces;
 using Application.Common.Models;
-using Infrastructure.gRPC_Clients.Sybase;
+using Infrastructure.GrpcClients.Sybase;
+
 
 namespace Infrastructure.SessionControl;
 
 public class SessionControl : ISessionControl
 {
-    private readonly ISesionDat _sesionDat;
-    public SessionControl(ISesionDat sessionDat) => _sesionDat = sessionDat;
+    private readonly ISessionDat _sessionDat;
+    public SessionControl(ISessionDat sessionDat) => _sessionDat = sessionDat;
 
     public RespuestaTransaccion SessionControlFilter(ValidaSesion bodyRequest)
     {
-        return _sesionDat.ControlSesion( bodyRequest );
+        return _sessionDat.ControlSession( bodyRequest );
     }
 }

@@ -35,10 +35,6 @@
       <Protobuf Include="GrpcClients\Protos\datosdalMongo.proto" GrpcServices="Client" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="GrpcClients\Sybase\Opis\" />
-    </ItemGroup>
-
 
 
 </Project>

@@ -2,7 +2,8 @@
 using Application.Persistence;
 using Infrastructure.GrpcClients.Mongo;
 using Infrastructure.GrpcClients.Sybase;
-using Infrastructure.GrpcClients.Sybase.Parametros;
+using Infrastructure.GrpcClients.Sybase.Opis;
+
 using Infrastructure.Services;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -19,8 +20,7 @@ public static class Infrastructure
         services.AddTransient<ISessionControl, SessionControl.SessionControl>();
         services.AddSingleton<ISessionDat, SessionDat>();
         services.AddSingleton<IKeysDat, KeysDat>();
-
-        services.AddSingleton<IParametroDat, ParametrosDat>();
+        
         services.AddSingleton<IOpisDat, OpisDat>();
     }
 }

@@ -3,6 +3,7 @@ using Application.Common.Converting;
 using Application.Common.Interfaces;
 using Application.Common.Models;
 using Application.Features.Opis.Queries.Imprimir.OrdenPago.Common;
+using Application.Persistence;
 using Domain.Entities.Opis;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -74,7 +75,7 @@ public class ImprimirOrdenPagoHandler : IRequestHandler<ReqImprimirOrdenPago, Re
         catch (Exception e)
         {
             _ = _logs.SaveExceptionLogs(respuesta, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase, e);
-            _logger.LogError(e, "Error en ImprimirOrdenPagoHandler");
+            _logger.LogError(e, "Ocurrió un error en ImprimirOrdenPagoHandler");
             throw new ArgumentException(respuesta.str_id_transaccion);
         }
 

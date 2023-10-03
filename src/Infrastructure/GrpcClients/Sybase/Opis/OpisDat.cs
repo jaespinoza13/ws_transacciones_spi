@@ -7,11 +7,12 @@ using Application.Features.Opis.Queries.Buscar;
 using Application.Features.Opis.Queries.Detalle;
 using Application.Features.Opis.Queries.Imprimir.OrdenPago;
 using Application.Features.Opis.Queries.Imprimir.Transferencias;
+using Application.Persistence;
 using Infrastructure.Common.Functions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Infrastructure.GrpcClients.Sybase;
+namespace Infrastructure.GrpcClients.Sybase.Opis;
 
 public class OpisDat: IOpisDat
 {

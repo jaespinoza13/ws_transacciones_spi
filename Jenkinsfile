@@ -10,11 +10,11 @@ pipeline {
     {
         VERSION_DESPLIEGUE  = '1.0.0'
         VERSION_PRODUCCION  = '0.0.0'
-        NOMBRE_CONTENEDOR   = 'api_wsTransacciones_spi'
-        NOMBRE_IMAGEN       = 'ws_transacciones_spi'
-        PUERTO              = '7020'
+        NOMBRE_CONTENEDOR   = 'api-wsTransacciones-spi'
+        NOMBRE_IMAGEN       = 'api-wsTransacciones-spi'
+        PUERTO              = ''
         PUERTO_CONTENEDOR   = '80'
-        RUTA_CONFIG = '/config/wsTranssaccionesSpi/'
+        RUTA_CONFIG = '/config/wsTransaccionesSpi/'
     }
 
     stages {

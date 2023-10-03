@@ -2,6 +2,7 @@
 using Application.Common.Converting;
 using Application.Common.Interfaces;
 using Application.Common.Models;
+using Application.Persistence;
 using Domain.Entities.Opis;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -51,7 +52,7 @@ public class BuscarOpisHandler : IRequestHandler<ReqBuscarOpis, ResBuscarOpis>
         catch (Exception e)
         {
             _ = _logs.SaveExceptionLogs(respuesta, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase, e);
-            _logger.LogError(e, "Error en BuscarOpisHandler");
+            _logger.LogError(e, "Ocurrió un error en BuscarOpisHandler");
             throw new ArgumentException(respuesta.str_id_transaccion);
         }
 

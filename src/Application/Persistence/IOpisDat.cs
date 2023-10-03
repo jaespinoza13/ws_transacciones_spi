@@ -4,7 +4,7 @@ using Application.Features.Opis.Queries.Detalle;
 using Application.Features.Opis.Queries.Imprimir.OrdenPago;
 using Application.Features.Opis.Queries.Imprimir.Transferencias;
 
-namespace Application.Common.Interfaces;
+namespace Application.Persistence;
 
 public interface IOpisDat
 {

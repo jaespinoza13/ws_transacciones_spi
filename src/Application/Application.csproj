@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Domain\Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="FluentValidation" Version="11.7.1" />
+      <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.7.1" />
+      <PackageReference Include="itext" Version="8.0.1" />
+      <PackageReference Include="itext.bouncy-castle-adapter" Version="8.0.1" />
+      <PackageReference Include="itext.bouncy-castle-fips-adapter" Version="8.0.1" />
+      <PackageReference Include="itext.commons" Version="8.0.1" />
+      <PackageReference Include="itext7" Version="8.0.1" />
+      <PackageReference Include="itext7.bouncy-castle-adapter" Version="8.0.1" />
+      <PackageReference Include="itext7.bouncy-castle-fips-adapter" Version="8.0.1" />
+      <PackageReference Include="MediatR" Version="12.1.1" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Options" Version="7.0.1" />
+    </ItemGroup>
+
+
+
+
+</Project>

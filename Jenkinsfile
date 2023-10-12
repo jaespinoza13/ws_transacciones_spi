@@ -10,11 +10,11 @@ pipeline {
     {
         VERSION_DESPLIEGUE  = '1.0.0'
         VERSION_PRODUCCION  = '0.0.0'
-        NOMBRE_CONTENEDOR   = 'api-wsTransacciones-spi'
-        NOMBRE_IMAGEN       = 'api-wsTransacciones-spi'
-        PUERTO              = ''
+        NOMBRE_CONTENEDOR   = 'servicio-transacciones-spi'
+        NOMBRE_IMAGEN       = 'ws_transacciones_spi'
+        PUERTO              = '9031'
         PUERTO_CONTENEDOR   = '80'
-        RUTA_CONFIG = '/config/wsTransaccionesSpi/'
+        RUTA_CONFIG 		= '/config/wsTransaccionesSPI'
     }
 
     stages {
@@ -44,6 +44,7 @@ pipeline {
                 echo 'Deploying ...'
                 sh  '''docker run --restart=always -it -dp ${PUERTO}:${PUERTO_CONTENEDOR} --name ${NOMBRE_CONTENEDOR} \
                         -e TZ=${TZ} \
+						-v ${RUTA_CONFIG}/appsettings.json:/app/appsettings.json \
                         ${NOMBRE_IMAGEN}:${VERSION_DESPLIEGUE}
                     '''
             }
@@ -66,7 +67,7 @@ pipeline {
             sh  'docker rm -f ${NOMBRE_CONTENEDOR}'
             sh  '''docker run --restart=always -it -dp ${PUERTO}:${PUERTO_CONTENEDOR} --name ${NOMBRE_CONTENEDOR} \
                         -e TZ=${TZ} \
-                        -v ${RUTA_CONFIG}appsettings.json:/app/appsettings.json \
+                        -v ${RUTA_CONFIG}/appsettings.json:/app/appsettings.json \
                         ${NOMBRE_IMAGEN}:${VERSION_PRODUCCION}
                     '''
             slackSend color: '#FE2D00', failOnError:true, message:"Despliegue fallido 😬 - ${env.JOB_NAME} he reversado a la version ${VERSION_PRODUCCION}  (<${env.BUILD_URL}|Open>)"

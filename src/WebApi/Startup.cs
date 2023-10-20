@@ -56,11 +56,13 @@ public static class Startup
         services.Configure<ApiConfig>(configuration.GetSection("ApiConfig:MongoConfig"));
         services.Configure<ApiConfig>(configuration.GetSection("ApiConfig:EndpointsAuth"));
         services.Configure<ApiConfig>(configuration.GetSection("ApiConfig:LogsPath"));
+        services.Configure<ApiConfig>(configuration.GetSection("ApiConfig:TemplatesPath"));
         services.Configure<ApiConfig>(configuration.GetSection("ApiConfig:LoadParameters"));
         services.Configure<ApiConfig>(configuration.GetSection("ApiConfig:HttpConfig"));
         services.Configure<ApiConfig>(configuration.GetSection("ApiConfig:ControlExcepciones"));
-        services.Configure<ApiConfig>(configuration.GetSection("ApiConfig:TemplatesPath"));
         services.Configure<ApiConfig>(configuration.GetSection("ApiConfig:LogosPath"));
+        services.Configure<ApiConfig>(configuration.GetSection("ApiConfig:EmailConfig"));
+        services.Configure<ApiConfig>(configuration.GetSection("ApiConfig:Endpoints"));
     }
 
     public static void UseWebApi(this IApplicationBuilder app, IWebHostEnvironment env)

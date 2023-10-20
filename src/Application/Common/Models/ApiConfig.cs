@@ -25,6 +25,12 @@ public class ApiConfig
 
     public string auth_ws { get; set; } = null!;
 
+    public string servicio_ws_alfresco { get; set; } = null!;
+
+
+    public int timeOutHttp { get; set; }
+    public int timeOutHttpBanRed { get; set; }
+
     public string logs_path_peticiones { get; set; } = null!;
     public string logs_path_errores { get; set; } = null!;
     public string logs_path_errores_db { get; set; } = null!;
@@ -34,6 +40,8 @@ public class ApiConfig
     public List<string> lst_canales_encriptar { get; set; } = new();
 
     public int mostrar_descripcion_badrequest { get; set; }
+    public string server_interno_email { get; set; } = null!;
+    public string puerto_interno_email { get; set; } = null!;
 
     public string path_logo_png { get; set; } = null!;
 

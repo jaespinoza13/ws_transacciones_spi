@@ -40,7 +40,7 @@ public class BuscarOpisHandler : IRequestHandler<ReqBuscarOpis, ResBuscarOpis>
 
             if (respuestaTransaccion.codigo.Equals("000"))
             {
-                var opis = Conversions.ConvertToListClassDynamic<BuscarOpis>((ConjuntoDatos)respuestaTransaccion.cuerpo);
+                var opis = Conversions.ConvertToList<BuscarOpis>((ConjuntoDatos)respuestaTransaccion.cuerpo);
 
                 respuesta.lst_opis = (List<BuscarOpis>)opis;
             }

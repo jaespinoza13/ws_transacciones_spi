@@ -30,7 +30,7 @@ public class CryptographyAesFilter : IActionFilter
 
         if (!_settings.lst_canales_encriptar.Contains( reqGetKeys.str_nemonico_canal )) return;
         var resTran = _keysDat.GetKeys( reqGetKeys );
-        var key = Conversions.ConvertToClassDynamic<ResGetKeys>( (ConjuntoDatos)resTran.cuerpo );
+        var key = Conversions.ConvertToClass<ResGetKeys>( (ConjuntoDatos)resTran.cuerpo );
 
         try
         {
@@ -58,7 +58,7 @@ public class CryptographyAesFilter : IActionFilter
         var reqGetKeys = JsonSerializer.Deserialize<ReqGetKeys>( JsonSerializer.Serialize( response ) )!;
         if (!_settings.lst_canales_encriptar.Contains( reqGetKeys.str_nemonico_canal )) return;
         var resTran = _keysDat.GetKeys( reqGetKeys );
-        var key = Conversions.ConvertToClassDynamic<ResGetKeys>( (ConjuntoDatos)resTran.cuerpo );
+        var key = Conversions.ConvertToClass<ResGetKeys>( (ConjuntoDatos)resTran.cuerpo );
 
         try
         {

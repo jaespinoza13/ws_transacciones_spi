@@ -39,11 +39,11 @@ public class DetalleOpiHandler : IRequestHandler<ReqDetalleOpi, ResDetalleOpi>
 
             if (respuestaTransaccion.codigo.Equals("000"))
             {
-                var detalleOpi = Conversions.ConvertToClassDynamic<DetalleOpi>((ConjuntoDatos)respuestaTransaccion.cuerpo);
+                var detalleOpi = Conversions.ConvertToClass<DetalleOpi>((ConjuntoDatos)respuestaTransaccion.cuerpo);
 
                 if (detalleOpi.str_tipo_ordenante.Equals("CLIENTE"))
                 {
-                    var condiciones = Conversions.ConvertToListClassDynamic<FirmanteCuenta>((ConjuntoDatos)respuestaTransaccion.cuerpo, 1);
+                    var condiciones = Conversions.ConvertToList<FirmanteCuenta>((ConjuntoDatos)respuestaTransaccion.cuerpo, 1);
                     respuesta.lst_condiciones = (List<FirmanteCuenta>)condiciones;
                 }
 

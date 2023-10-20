@@ -10,7 +10,8 @@ public interface ILogs
 
     Task SaveExceptionLogs(dynamic transaction, string strOperacion, string strMetodo, string strClase, object objError);
 
-    Task SaveHttpErrorLogs(dynamic transaction, string strMetodo, string strClase, dynamic objError, string strIdTransaccion);
+    Task SaveHttpErrorLogs(dynamic? transaction, string strMetodo, string strClase, dynamic objError, string? strIdTransaccion);
+    
 
     Task SaveAmenazasLogs(ValidacionInyeccion validacion, string strOperacion, string strMetodo, string strClase);
 

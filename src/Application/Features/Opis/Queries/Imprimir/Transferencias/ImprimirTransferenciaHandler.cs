@@ -43,7 +43,7 @@ public class ImprimirTransferenciaHandler : IRequestHandler<ReqImprimirTransfere
 
             if (respuestaTransaccion.codigo.Equals("000"))
             {
-                var autorizacion = Conversions.ConvertToClassDynamic<AutorizacionTransfExterna>((ConjuntoDatos)respuestaTransaccion.cuerpo);
+                var autorizacion = Conversions.ConvertToClass<AutorizacionTransfExterna>((ConjuntoDatos)respuestaTransaccion.cuerpo);
 
                 var bytes = request.str_tipo_persona switch
                 {

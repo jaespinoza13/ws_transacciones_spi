@@ -54,17 +54,16 @@ public class GenerarSpi1Handler : IRequestHandler<ReqGenerarSpi1, ResGenerarSpi1
             var cabeceraSpi = Conversions.ConvertToClass<CabeceraSpi1>( (ConjuntoDatos)body );
             var detalleSpi1 = Conversions.ConvertToList<DetalleSpi1>( (ConjuntoDatos)body, 1 ).ToList();
             var consolidadoSpi1 = Conversions.ConvertToList<DetalleSpi1Consolidado>( (ConjuntoDatos)body, 2 ).ToList();
-
-            var streamSpi1 = await Spi1Utils.GenerarSpi1Stream( cabeceraSpi, detalleSpi1 );
-            var md5Spi1 = Spi1Utils.CalcularValorMd5( streamSpi1 );
             
+            var (fileContents, md5Hash) = await Spi1Utils.GenerateSpi1TxtAndMd5(cabeceraSpi, detalleSpi1);
+
             respuesta.str_nombre_archivo = cabeceraSpi.str_nom_archivo_spi1;
             respuesta.int_cantidad_registros = cabeceraSpi.int_num_total_opi;
             respuesta.int_numero_corte = cabeceraSpi.int_numero_envio;
-            respuesta.spi1_txt = Convert.ToBase64String( streamSpi1 );
-            respuesta.spi1_md5 = Convert.ToBase64String( Encoding.UTF8.GetBytes( md5Spi1 ) );
+            respuesta.spi1_txt = Convert.ToBase64String( fileContents );
+            respuesta.spi1_md5 = Convert.ToBase64String( Encoding.UTF8.GetBytes( md5Hash ) );
             
-            var resConsolidado = Spi1Utils.ReporteConsolidado( _apiConfig, request.str_email, cabeceraSpi, consolidadoSpi1, streamSpi1 );
+            var resConsolidado = Spi1Utils.ReporteConsolidado( _apiConfig, request.str_email, cabeceraSpi, consolidadoSpi1, fileContents );
 
             respuesta.str_res_codigo = resConsolidado.codigo;
             respuesta.str_res_info_adicional = resConsolidado.diccionario["str_error"];

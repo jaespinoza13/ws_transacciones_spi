@@ -6,5 +6,6 @@ namespace Application.Features.SpiArchivo.Queries.Spi1;
 public class ResTotalOpiSpi1: ResComun
 {
     public IReadOnlyList<TotalOpiCorte> lst_total_opi_corte { get; set; } = new List<TotalOpiCorte>();
-    public decimal dec_total_monto { get; set; } = 0;
+    public decimal dec_total_monto { get; set; }
+    public int int_total_opis { get; set; }
 }

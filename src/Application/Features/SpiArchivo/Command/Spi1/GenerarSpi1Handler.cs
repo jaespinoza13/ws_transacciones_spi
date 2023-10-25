@@ -34,10 +34,13 @@ public class GenerarSpi1Handler : IRequestHandler<ReqGenerarSpi1, ResGenerarSpi1
     public async Task<ResGenerarSpi1> Handle(ReqGenerarSpi1 request, CancellationToken cancellationToken)
     {
         var respuesta = new ResGenerarSpi1();
+        
         const string strOperacion = "SET_GENERAR_SPI1";
 
         try
         {
+            respuesta.LlenarResHeader(request);
+            
             _ = _logs.SaveHeaderLogs( request, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
 
             var resGenerarSpi1Dat = await _spiArchivoDat.GenerarSpi1( request );

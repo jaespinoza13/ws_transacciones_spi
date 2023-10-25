@@ -1,11 +1,11 @@
 ﻿using System.Reflection;
+using MediatR;
+using Microsoft.Extensions.Logging;
 using Application.Common.Converting;
 using Application.Common.Interfaces;
 using Application.Common.Models;
 using Application.Persistence;
 using Domain.Entities.Opis;
-using MediatR;
-using Microsoft.Extensions.Logging;
 
 namespace Application.Features.Opis.Queries.Detalle;
 

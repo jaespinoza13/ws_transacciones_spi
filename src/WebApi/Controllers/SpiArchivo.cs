@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Application.Common.ISO20022.Models;
 using Application.Features.SpiArchivo.Command.Spi1;
+using Application.Features.SpiArchivo.Queries.Spi1;
 using Domain.Types;
 using WebApi.Filters;
 
@@ -29,4 +30,7 @@ public class SpiArchivo : BaseController
     [HttpPost( "SET_GENERAR_SPI1" )]
     [ProducesResponseType( typeof(ResGenerarSpi1), (int)HttpStatusCode.OK )]
     public async Task<ResGenerarSpi1> SetGenerarSpi1(ReqGenerarSpi1 request) => await _mediator.Send( request );
+    [HttpPost( "GET_TOTAL_OPI_SPI1" )]
+    [ProducesResponseType( typeof(ResTotalOpiSpi1), (int)HttpStatusCode.OK )]
+    public async Task<ResTotalOpiSpi1> GetTotalOpiCorte(ReqTotalOpiSp1 request) => await _mediator.Send( request );
 }

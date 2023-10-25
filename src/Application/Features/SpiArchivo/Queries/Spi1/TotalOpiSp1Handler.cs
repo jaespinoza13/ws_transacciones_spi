@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Globalization;
+using System.Reflection;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Application.Common.Converting;
@@ -44,7 +45,7 @@ public class TotalOpiSp1Handler: IRequestHandler<ReqTotalOpiSp1, ResTotalOpiSpi1
                 var body = responseDat.cuerpo;
                 var opis = Conversions.ConvertToList<TotalOpiCorte>((ConjuntoDatos)body).ToList();
                 respuesta.lst_total_opi_corte = opis;
-                respuesta.dec_total_monto = opis.Sum( x => Convert.ToDecimal( x.dec_total_monto ) );
+                respuesta.dec_total_monto = opis.Sum( x => Convert.ToDecimal( x.dec_total_monto ) ).ToString( CultureInfo.InvariantCulture );
                 respuesta.int_total_opis = opis.Sum( x => Convert.ToInt32( x.int_total_opis ) );
             }
 

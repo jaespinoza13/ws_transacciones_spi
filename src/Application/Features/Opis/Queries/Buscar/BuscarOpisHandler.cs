@@ -1,11 +1,12 @@
 ﻿using System.Reflection;
+using MediatR;
+using Microsoft.Extensions.Logging;
 using Application.Common.Converting;
 using Application.Common.Interfaces;
 using Application.Common.Models;
 using Application.Persistence;
 using Domain.Entities.Opis;
-using MediatR;
-using Microsoft.Extensions.Logging;
+
 
 namespace Application.Features.Opis.Queries.Buscar;
 
@@ -40,7 +41,7 @@ public class BuscarOpisHandler : IRequestHandler<ReqBuscarOpis, ResBuscarOpis>
 
             if (respuestaTransaccion.codigo.Equals("000"))
             {
-                var opis = Conversions.ConvertToListClassDynamic<BuscarOpis>((ConjuntoDatos)respuestaTransaccion.cuerpo);
+                var opis = Conversions.ConvertToList<BuscarOpis>((ConjuntoDatos)respuestaTransaccion.cuerpo);
 
                 respuesta.lst_opis = (List<BuscarOpis>)opis;
             }

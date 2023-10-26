@@ -1,13 +1,14 @@
 ﻿using System.Reflection;
+using MediatR;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Application.Common.Converting;
 using Application.Common.Interfaces;
 using Application.Common.Models;
 using Application.Features.Opis.Queries.Imprimir.Transferencias.Common;
 using Application.Persistence;
 using Domain.Entities.Opis;
-using MediatR;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+
 
 namespace Application.Features.Opis.Queries.Imprimir.Transferencias;
 
@@ -29,21 +30,21 @@ public class ImprimirTransferenciaHandler : IRequestHandler<ReqImprimirTransfere
     }
 
 
-    public async Task<ResImprimirTransferencia> Handle(ReqImprimirTransferencia request,
-        CancellationToken cancellationToken)
+    public async Task<ResImprimirTransferencia> Handle(ReqImprimirTransferencia request, CancellationToken cancellationToken)
     {
         var respuesta = new ResImprimirTransferencia();
         const string strOperacion = "GET_IMPRIMIR_TRANSFERENCIA";
         try
         {
             respuesta.LlenarResHeader(request);
+            
             _ = _logs.SaveHeaderLogs(request, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase);
 
             var respuestaTransaccion = await _opisDat.ImprimirTransferencia(request);
 
             if (respuestaTransaccion.codigo.Equals("000"))
             {
-                var autorizacion = Conversions.ConvertToClassDynamic<AutorizacionTransfExterna>((ConjuntoDatos)respuestaTransaccion.cuerpo);
+                var autorizacion = Conversions.ConvertToClass<AutorizacionTransfExterna>((ConjuntoDatos)respuestaTransaccion.cuerpo);
 
                 var bytes = request.str_tipo_persona switch
                 {

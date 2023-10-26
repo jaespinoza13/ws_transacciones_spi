@@ -11,8 +11,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="FluentValidation" Version="11.7.1" />
-      <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.7.1" />
+      <PackageReference Include="FluentValidation" Version="11.8.0" />
+      <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.8.0" />
       <PackageReference Include="itext" Version="8.0.1" />
       <PackageReference Include="itext.bouncy-castle-adapter" Version="8.0.1" />
       <PackageReference Include="itext.bouncy-castle-fips-adapter" Version="8.0.1" />

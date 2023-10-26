@@ -80,8 +80,7 @@ public class LogsService : ILogs
     /// <param name="objError"></param>
     /// <returns></returns>
     ///
-    public async Task SaveExceptionLogs(dynamic transaction, string strOperacion, string strMetodo, string strClase,
-        object objError)
+    public async Task SaveExceptionLogs(dynamic transaction, string strOperacion, string strMetodo, string strClase, object objError)
     {
         var objSave = new { peticion = transaction, error = objError };
         _infoLog.str_id_transaccion = transaction.str_id_transaccion;
@@ -99,8 +98,7 @@ public class LogsService : ILogs
         await _mongoDat.GuardarExcepcionesMongo(transaction, objError);
     }
 
-    public async Task SaveAmenazasLogs(ValidacionInyeccion validacion, string strOperacion, string strMetodo,
-        string strClase)
+    public async Task SaveAmenazasLogs(ValidacionInyeccion validacion, string strOperacion, string strMetodo, string strClase)
     {
         _infoLog.str_clase = strClase;
         _infoLog.str_operacion = strOperacion;
@@ -127,12 +125,11 @@ public class LogsService : ILogs
     /// <param name="strIdTransaccion"></param>
     /// <returns></returns>
     ///
-    public async Task SaveHttpErrorLogs(dynamic transaction, string strMetodo, string strClase, dynamic objError,
-        string strIdTransaccion)
+    public async Task SaveHttpErrorLogs(dynamic? transaction, string strMetodo, string strClase, dynamic objError, string? strIdTransaccion)
     {
         var objSave = new { peticion = transaction, error = objError };
 
-        _infoLog.str_id_transaccion = strIdTransaccion;
+        _infoLog.str_id_transaccion = strIdTransaccion ?? "0";
         _infoLog.str_clase = strClase;
         _infoLog.str_objeto = objSave.ToString()!;
         _infoLog.str_metodo = strMetodo;
@@ -146,8 +143,7 @@ public class LogsService : ILogs
         await _mongoDat.GuardarErroresHttp(transaction, objError, strIdTransaccion);
     }
 
-    public async Task SaveExcepcionDataBaseSybase(dynamic transaction, string strMetodo, Exception excepcion,
-        string strClase)
+    public async Task SaveExcepcionDataBaseSybase(dynamic transaction, string strMetodo, Exception excepcion, string strClase)
     {
         _infoLog.str_id_transaccion = transaction.str_id_transaccion;
         _infoLog.str_clase = strClase;

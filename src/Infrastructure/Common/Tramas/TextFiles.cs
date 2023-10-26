@@ -24,7 +24,7 @@ public static class TextFiles
                 using (var writer = new StreamWriter( fs ))
                 {
 
-                    writer.WriteLine($"{DateTime.Now.ToString( "HHmmssff" ) } { strTramaRequest }");
+                    writer.WriteLine($"{DateTime.Now:HHmmssff} { strTramaRequest }");
                 }
 
                 fs.Close();
@@ -53,8 +53,7 @@ public static class TextFiles
                 using var fs = File.Open( fileName, FileMode.Append, FileAccess.Write, FileShare.ReadWrite );
                 using (var writer = new StreamWriter( fs ))
                 {
-                    writer.WriteLine( DateTime.Now.ToString( "HHmmssff" ) + " " + strTipo +
-                                      JsonSerializer.Serialize( obj ) + " " );
+                    writer.WriteLine( DateTime.Now.ToString( "HHmmssff" ) + " " + strTipo + JsonSerializer.Serialize( obj ) + " " );
                 }
 
                 fs.Close();

@@ -1,11 +1,11 @@
 ﻿using System.Reflection;
+using MediatR;
+using Microsoft.Extensions.Logging;
 using Application.Common.Converting;
 using Application.Common.Interfaces;
 using Application.Common.Models;
 using Application.Persistence;
 using Domain.Entities.Opis;
-using MediatR;
-using Microsoft.Extensions.Logging;
 
 namespace Application.Features.Opis.Queries.Detalle;
 
@@ -39,11 +39,11 @@ public class DetalleOpiHandler : IRequestHandler<ReqDetalleOpi, ResDetalleOpi>
 
             if (respuestaTransaccion.codigo.Equals("000"))
             {
-                var detalleOpi = Conversions.ConvertToClassDynamic<DetalleOpi>((ConjuntoDatos)respuestaTransaccion.cuerpo);
+                var detalleOpi = Conversions.ConvertToClass<DetalleOpi>((ConjuntoDatos)respuestaTransaccion.cuerpo);
 
                 if (detalleOpi.str_tipo_ordenante.Equals("CLIENTE"))
                 {
-                    var condiciones = Conversions.ConvertToListClassDynamic<FirmanteCuenta>((ConjuntoDatos)respuestaTransaccion.cuerpo, 1);
+                    var condiciones = Conversions.ConvertToList<FirmanteCuenta>((ConjuntoDatos)respuestaTransaccion.cuerpo, 1);
                     respuesta.lst_condiciones = (List<FirmanteCuenta>)condiciones;
                 }
 

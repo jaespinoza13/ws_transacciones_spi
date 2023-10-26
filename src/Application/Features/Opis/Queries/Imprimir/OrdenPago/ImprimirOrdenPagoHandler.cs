@@ -1,13 +1,14 @@
 ﻿using System.Reflection;
+using MediatR;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Application.Common.Converting;
 using Application.Common.Interfaces;
 using Application.Common.Models;
 using Application.Features.Opis.Queries.Imprimir.OrdenPago.Common;
 using Application.Persistence;
 using Domain.Entities.Opis;
-using MediatR;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+
 
 namespace Application.Features.Opis.Queries.Imprimir.OrdenPago;
 
@@ -45,7 +46,7 @@ public class ImprimirOrdenPagoHandler : IRequestHandler<ReqImprimirOrdenPago, Re
             if (respuestaTransaccion.codigo.Equals("000"))
             {
                 var detalleOpi =
-                    Conversions.ConvertToClassDynamic<DetalleOpi>((ConjuntoDatos)respuestaTransaccion.cuerpo);
+                    Conversions.ConvertToClass<DetalleOpi>((ConjuntoDatos)respuestaTransaccion.cuerpo);
 
 
                 var bytes = request.str_tipo_ordenante switch

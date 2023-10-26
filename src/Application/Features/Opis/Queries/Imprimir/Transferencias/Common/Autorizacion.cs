@@ -1,6 +1,4 @@
-﻿using Application.Common.Models;
-using Domain.Entities.Opis;
-using iText.IO.Image;
+﻿using iText.IO.Image;
 using iText.Kernel.Colors;
 using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
@@ -8,6 +6,8 @@ using iText.Layout;
 using iText.Layout.Borders;
 using iText.Layout.Element;
 using iText.Layout.Properties;
+using Application.Common.Models;
+using Domain.Entities.Opis;
 
 namespace Application.Features.Opis.Queries.Imprimir.Transferencias.Common;
 

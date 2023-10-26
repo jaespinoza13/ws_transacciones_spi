@@ -8,8 +8,8 @@ pipeline {
 
     environment 
     {
-        VERSION_DESPLIEGUE  = '1.0.0'
-        VERSION_PRODUCCION  = '0.0.0'
+        VERSION_DESPLIEGUE  = '1.0.1'
+        VERSION_PRODUCCION  = '1.0.0'
         NOMBRE_CONTENEDOR   = 'servicio-transacciones-spi'
         NOMBRE_IMAGEN       = 'ws_transacciones_spi'
         PUERTO              = '9031'

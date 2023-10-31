@@ -13,7 +13,7 @@ namespace Application.Features.Opis.Queries.Imprimir.OrdenPago.Common;
 
 public static class Autorizacion
 {
-    public static byte[] GenerarInterbancaria(DetalleOpi orden, ApiConfig settings)
+    public static string GenerarInterbancaria(DetalleOpi orden, ApiConfig settings)
     {
         const string title =
             "Cooperativa de Ahorro y Crédito Vicentina “Manuel Esteban Godoy Ortega” Ltda. \n\n AUTORIZACIÓN DE TRANSFERENCIA INTERBANCARIA";
@@ -186,7 +186,8 @@ public static class Autorizacion
         ms = new MemoryStream();
         ms.Write(bytes, 0, bytes.Length);
         ms.Position = 0;
-        return bytes;
+        var base64Pdf = Convert.ToBase64String( bytes, Base64FormattingOptions.None );
+        return base64Pdf;
     }
 
     public static byte[] GenerarOrdenPago(DetalleOpi orden, ApiConfig settings)

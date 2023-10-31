@@ -5,5 +5,6 @@ namespace Application.Features.Opis.Queries.Imprimir.OrdenPago;
 
 public class ResImprimirOrdenPago : ResComun
 {
-    public Archivo autorizacion { get; set; } = new();
+    public string? file_bytes { get; set; }
+    public string? str_doc_extencion { get; set; }
 }

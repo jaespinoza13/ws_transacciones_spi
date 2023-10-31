@@ -63,6 +63,7 @@ public static class Startup
         services.Configure<ApiConfig>(configuration.GetSection("ApiConfig:LogosPath"));
         services.Configure<ApiConfig>(configuration.GetSection("ApiConfig:EmailConfig"));
         services.Configure<ApiConfig>(configuration.GetSection("ApiConfig:Endpoints"));
+        services.Configure<ApiConfig>(configuration.GetSection("ApiConfig:PathPlantillas"));
     }
 
     public static void UseWebApi(this IApplicationBuilder app, IWebHostEnvironment env)

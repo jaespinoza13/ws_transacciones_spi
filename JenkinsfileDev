@@ -14,8 +14,8 @@ pipeline {
         NOMBRE_IMAGEN       = 'ws_transacciones_spi'
         PUERTO              = '7020'
         PUERTO_CONTENEDOR   = '80'
-        RUTA_CONFIG 		= '/config/wsTransaccionesSPI',
-        RUTA_PLANTILLAS    = '/plantillas/spi',
+        RUTA_CONFIG 		= '/config/wsTransaccionesSPI'
+        RUTA_PLANTILLAS    = '/plantillas/spi'
     }
 
     stages {

@@ -43,6 +43,7 @@ public class ApiConfig
     public string path_template_autorizacion_pj { get; set; } = null!;
     public string path_template_autorizacion_proveedor { get; set; } = null!;
     public string path_template_autorizacion_interbancaria { get; set; } = null!;
+    public string path_template_cuadre_opis { get; set; } = null!;
 
     public int mostrar_descripcion_badrequest { get; set; }
     public string server_interno_email { get; set; } = null!;

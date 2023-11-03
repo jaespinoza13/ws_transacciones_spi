@@ -51,8 +51,8 @@ public class ImprimirOrdenPagoHandler : IRequestHandler<ReqImprimirOrdenPago, Re
 
                 var bytes = request.str_tipo_ordenante switch
                 {
-                    "PROVEEDOR" => AutorizacionV2.GenerarOrdenPago(detalleOpi, _apiConfig),
-                    _ => AutorizacionV2.GenerarInterbancaria(detalleOpi, _apiConfig)
+                    "PROVEEDOR" => Autorizacion.GenerarOrdenPago(detalleOpi, _apiConfig),
+                    _ => Autorizacion.GenerarInterbancaria(detalleOpi, _apiConfig)
                 };
 
                 if (bytes.Length > 0)

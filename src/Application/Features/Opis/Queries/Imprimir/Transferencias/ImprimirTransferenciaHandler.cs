@@ -48,8 +48,8 @@ public class ImprimirTransferenciaHandler : IRequestHandler<ReqImprimirTransfere
 
                 var bytes = request.str_tipo_persona switch
                 {
-                    "N" => AutorizacionV2.GenerarAutorizacionPersonaNatural(autorizacion, _apiConfig),
-                    _ => AutorizacionV2.GenerarAutorizacionPersonaJuridica(autorizacion, _apiConfig)
+                    "N" => Autorizacion.GenerarAutorizacionPersonaNatural(autorizacion, _apiConfig),
+                    _ => Autorizacion.GenerarAutorizacionPersonaJuridica(autorizacion, _apiConfig)
                 };
 
                 if (bytes.Length > 0)

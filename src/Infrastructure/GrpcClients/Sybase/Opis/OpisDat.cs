@@ -51,6 +51,7 @@ public class OpisDat: IOpisDat
             ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@int_nivel_opi", TipoDato = TipoDato.Integer, ObjValue = request.int_nivel_opi.ToString() } );
             ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@int_estado_bce", TipoDato = TipoDato.Integer, ObjValue = request.int_estado_bce.ToString() } );
             ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@int_estado_banred", TipoDato = TipoDato.Integer, ObjValue = request.int_estado_banred.ToString() } );
+            ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@int_estado_opi", TipoDato = TipoDato.Integer, ObjValue = request.int_estado_opi.ToString() } );
             ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@str_banco_destino", TipoDato = TipoDato.VarChar, ObjValue = request.str_banco_destino } );
             ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@str_ruc_proveedor", TipoDato = TipoDato.VarChar, ObjValue = request.str_ruc_proveedor } );
             ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@str_comprobante_venta", TipoDato = TipoDato.VarChar, ObjValue = request.str_comprobante_venta } );

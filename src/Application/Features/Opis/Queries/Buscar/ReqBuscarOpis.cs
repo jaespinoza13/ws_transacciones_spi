@@ -18,6 +18,7 @@ public class ReqBuscarOpis : Header, IRequest<ResBuscarOpis>
     public int int_nivel_opi { get; set; } = -1;
     public int int_estado_bce { get; set; } = -1;
     public int int_estado_banred { get; set; } = -1;
+    public int int_estado_opi { get; set; } = -1;
     public string str_banco_destino { get; set; } = "-1";
     public string str_ruc_proveedor { get; set; } = "-1";
     public string str_comprobante_venta { get; set; } = "-1";

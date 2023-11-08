@@ -45,13 +45,12 @@ public class ImprimirOrdenPagoHandler : IRequestHandler<ReqImprimirOrdenPago, Re
 
             if (respuestaTransaccion.codigo.Equals("000"))
             {
-                var detalleOpi =
-                    Conversions.ConvertToClass<DetalleOpi>((ConjuntoDatos)respuestaTransaccion.cuerpo);
+                var detalleOpi = Conversions.ConvertToClass<DetalleOpi>((ConjuntoDatos)respuestaTransaccion.cuerpo);
 
 
                 var bytes = request.str_tipo_ordenante switch
                 {
-                    "PROVEEDOR" => Autorizacion.GenerarOrdenPago(detalleOpi, _apiConfig),
+                    "PROVEEDOR" => Autorizacion.GenerarOrdenPago(detalleOpi, _apiConfig, request.str_tipo_documento),
                     _ => Autorizacion.GenerarInterbancaria(detalleOpi, _apiConfig)
                 };
 

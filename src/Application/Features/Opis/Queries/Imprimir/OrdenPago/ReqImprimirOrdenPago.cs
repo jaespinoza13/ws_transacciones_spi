@@ -7,4 +7,5 @@ public class ReqImprimirOrdenPago : Header, IRequest<ResImprimirOrdenPago>
 {
     public int int_codigo_opi { get; set; }
     public string str_tipo_ordenante { get; set; } = string.Empty;
+    public string str_tipo_documento { get; set; } = "AUTORIZACION";
 }

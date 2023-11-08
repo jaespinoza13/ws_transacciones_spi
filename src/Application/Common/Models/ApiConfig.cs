@@ -42,6 +42,7 @@ public class ApiConfig
     public string path_template_autorizacion_pn { get; set; } = null!;
     public string path_template_autorizacion_pj { get; set; } = null!;
     public string path_template_autorizacion_proveedor { get; set; } = null!;
+    public string path_template_comprobante_proveedor { get; set; } = null!;
     public string path_template_autorizacion_interbancaria { get; set; } = null!;
     public string path_template_cuadre_opis { get; set; } = null!;
 

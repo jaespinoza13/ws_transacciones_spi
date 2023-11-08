@@ -4,6 +4,7 @@ using Application.Common.Interfaces;
 using Application.Common.Models;
 using Application.Persistence;
 using Domain;
+using Domain.Entities;
 using MediatR;
 using Microsoft.Extensions.Logging;
 

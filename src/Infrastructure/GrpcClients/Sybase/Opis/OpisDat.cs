@@ -202,7 +202,7 @@ public class OpisDat: IOpisDat
             ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@dtt_fecha", TipoDato = TipoDato.DateTime, ObjValue = request.dtt_fecha.ToString( CultureInfo.InvariantCulture ) } );
             ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@int_tipo_ordenante", TipoDato = TipoDato.Integer, ObjValue = request.int_tipo_ordenante.ToString() } );
 
-            ds.NombreSP = "get_ordenes_pago";
+            ds.NombreSP = "get_cuadre_opis";
             ds.NombreBD = _apiConfig.db_meg_bce;
 
             var resultado = await _objClientDal.ExecuteDataSetAsync( ds );

@@ -54,15 +54,15 @@ public class ImprimirTransferenciaHandler : IRequestHandler<ReqImprimirTransfere
 
                 if (bytes.Length > 0)
                 {
-                    respuesta.autorizacion.file_bytes = bytes;
-                    respuesta.autorizacion.str_doc_extencion = "application/pdf";
+                    respuesta.file_bytes = bytes;
+                    respuesta.str_doc_extencion = "application/pdf";
                     respuesta.str_res_codigo = "000";
                     respuesta.str_res_info_adicional = "Autorización generada correctamente";
                 }
                 else
                 {
-                    respuesta.autorizacion.file_bytes = null;
-                    respuesta.autorizacion.str_doc_extencion = null;
+                    respuesta.file_bytes = null;
+                    respuesta.str_doc_extencion = null;
                     respuesta.str_res_codigo = "999";
                     respuesta.str_res_info_adicional = "Error al generar la autorización";
                 }

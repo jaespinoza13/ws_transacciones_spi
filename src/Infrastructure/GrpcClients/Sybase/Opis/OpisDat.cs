@@ -4,6 +4,7 @@ using AccesoDatosGrpcAse.Neg;
 using Application.Common.Interfaces;
 using Application.Common.Models;
 using Application.Features.Opis.Queries.Buscar;
+using Application.Features.Opis.Queries.Cuadre;
 using Application.Features.Opis.Queries.Detalle;
 using Application.Features.Opis.Queries.Imprimir.OrdenPago;
 using Application.Features.Opis.Queries.Imprimir.Transferencias;
@@ -45,6 +46,13 @@ public class OpisDat: IOpisDat
             ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@str_cta_beneficiario", TipoDato = TipoDato.VarChar, ObjValue = request.str_cta_beneficiario } );
             ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@str_ident_beneficiario", TipoDato = TipoDato.VarChar, ObjValue = request.str_ident_beneficiario } );
             ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@int_codigo_opi", TipoDato = TipoDato.Integer, ObjValue = request.int_codigo_opi.ToString() } );
+            ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@str_usuario", TipoDato = TipoDato.VarChar, ObjValue = request.str_usuario } );
+            ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@dec_monto", TipoDato = TipoDato.Decimal, ObjValue = request.dec_monto.ToString( CultureInfo.InvariantCulture ) } );
+            ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@int_nivel_opi", TipoDato = TipoDato.Integer, ObjValue = request.int_nivel_opi.ToString() } );
+            ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@int_estado_bce", TipoDato = TipoDato.Integer, ObjValue = request.int_estado_bce.ToString() } );
+            ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@int_estado_banred", TipoDato = TipoDato.Integer, ObjValue = request.int_estado_banred.ToString() } );
+            ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@int_estado_opi", TipoDato = TipoDato.Integer, ObjValue = request.int_estado_opi.ToString() } );
+            ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@str_banco_destino", TipoDato = TipoDato.VarChar, ObjValue = request.str_banco_destino } );
             ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@str_ruc_proveedor", TipoDato = TipoDato.VarChar, ObjValue = request.str_ruc_proveedor } );
             ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@str_comprobante_venta", TipoDato = TipoDato.VarChar, ObjValue = request.str_comprobante_venta } );
             ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@str_comprobante_cont", TipoDato = TipoDato.VarChar, ObjValue = request.str_comprobante_cont } );
@@ -183,4 +191,41 @@ public class OpisDat: IOpisDat
 
         return respuesta;
     }
+
+    public async Task<RespuestaTransaccion> CuadreOpis(ReqCuadreOpis request)
+    {
+        var respuesta = new RespuestaTransaccion();
+        try
+        {
+            var ds = new DatosSolicitud();
+            Funciones.LlenarDatosAuditoriaSalida( ds, request );
+            ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@dtt_fecha", TipoDato = TipoDato.DateTime, ObjValue = request.dtt_fecha.ToString( CultureInfo.InvariantCulture ) } );
+            ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@int_tipo_ordenante", TipoDato = TipoDato.Integer, ObjValue = request.int_tipo_ordenante.ToString() } );
+
+            ds.NombreSP = "get_cuadre_opis";
+            ds.NombreBD = _apiConfig.db_meg_bce;
+
+            var resultado = await _objClientDal.ExecuteDataSetAsync( ds );
+            var lstValores = resultado.ListaPSalidaValores.ToList();
+
+            var strCodigo = lstValores.Find( x => x.StrNameParameter == "@int_o_error_cod" )!.ObjValue;
+            var strError = lstValores.Find( x => x.StrNameParameter == "@str_o_error" )!.ObjValue.Trim();
+
+            respuesta.codigo = strCodigo.Trim().PadLeft( 3, '0' );
+            respuesta.cuerpo = Funciones.ObtenerDatos( resultado );
+            respuesta.diccionario.Add( "str_error", strError );
+
+        }
+        catch (Exception e)
+        {
+            respuesta.codigo = "001";
+            respuesta.diccionario.Add( "str_error", e.InnerException?.Message ?? e.Message );
+            _logger.LogError( e, "Ocurrió un error en stored procedure get_ordenes_pago" );
+            _ = _logService.SaveExcepcionDataBaseSybase( request, MethodBase.GetCurrentMethod()!.Name, e, _clase );
+            throw new ArgumentException( request.str_id_transaccion );
+        }
+
+        return respuesta;
+    }
+    
 }

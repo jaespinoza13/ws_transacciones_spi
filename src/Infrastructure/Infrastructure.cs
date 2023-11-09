@@ -2,6 +2,7 @@
 using Application.Persistence;
 using Infrastructure.GrpcClients.Mongo;
 using Infrastructure.GrpcClients.Sybase;
+using Infrastructure.GrpcClients.Sybase.Catalogos;
 using Infrastructure.GrpcClients.Sybase.Opis;
 using Infrastructure.GrpcClients.Sybase.SpiArchivo;
 using Infrastructure.Services;
@@ -23,6 +24,7 @@ public static class Infrastructure
         
         services.AddSingleton<ISessionDat, SessionDat>();
         services.AddSingleton<IKeysDat, KeysDat>();
+        services.AddSingleton<ICatalogoDat, CatalogoDat>();
         services.AddSingleton<IOpisDat, OpisDat>();
         services.AddSingleton<ISpiArchivoDat, SpiArchivoDat>();
     }

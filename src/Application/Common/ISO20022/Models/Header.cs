@@ -17,7 +17,7 @@ public class Header
     public string str_ente { get; set; } = string.Empty;
 
     /// <summary>
-    /// Nemonico del canal Ejm: CANBEEBOT
+    /// Nemonico del canal Ejm: CANVEN
     /// </summary>
     [Required( ErrorMessage = "Nemonico del canal es requerido" )]
     public string str_nemonico_canal { get; set; } = string.Empty;
@@ -30,7 +30,7 @@ public class Header
     public string str_id_sistema { get; set; } = string.Empty;
 
     /// <summary>
-    /// Nombre de la app Ejm: MEGONLINE
+    /// Nombre de la app Ejm: SPI
     /// </summary>
     ///
     [Required( ErrorMessage = "Nombre de App es requerido" )]

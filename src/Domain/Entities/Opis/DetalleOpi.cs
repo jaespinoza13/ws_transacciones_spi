@@ -19,6 +19,7 @@ public class DetalleOpi
     public string str_motivo_rechazo { get; set; } = string.Empty;
     public string str_ruta_archivo { get; set; } = string.Empty;
     public string str_estado_interno { get; set; } = string.Empty;
+    public int int_nivel_opi { get; set; }
     public string str_info_adicional { get; set; } = string.Empty;
     public string str_tipo_ordenante { get; set; } = string.Empty;
     public string dtt_fecha_ingresa { get; set; } = string.Empty;

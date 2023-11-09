@@ -38,6 +38,13 @@ public class ApiConfig
     public string logs_path_errores_http { get; set; } = null!;
 
     public List<string> lst_canales_encriptar { get; set; } = new();
+    
+    public string path_template_autorizacion_pn { get; set; } = null!;
+    public string path_template_autorizacion_pj { get; set; } = null!;
+    public string path_template_autorizacion_proveedor { get; set; } = null!;
+    public string path_template_comprobante_proveedor { get; set; } = null!;
+    public string path_template_autorizacion_interbancaria { get; set; } = null!;
+    public string path_template_cuadre_opis { get; set; } = null!;
 
     public int mostrar_descripcion_badrequest { get; set; }
     public string server_interno_email { get; set; } = null!;

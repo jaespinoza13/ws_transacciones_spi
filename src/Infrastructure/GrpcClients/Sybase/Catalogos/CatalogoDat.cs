@@ -2,41 +2,46 @@
 using AccesoDatosGrpcAse.Neg;
 using Application.Common.Interfaces;
 using Application.Common.Models;
-using Application.Features.SpiArchivo.Command.Spi1;
-using Application.Features.SpiArchivo.Queries.Spi1;
+using Application.Features.Catalogos.Queries.GetCatalogos;
+using Application.Features.Catalogos.Queries.GetIfis;
 using Application.Persistence;
 using Infrastructure.Common.Functions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Infrastructure.GrpcClients.Sybase.SpiArchivo;
+namespace Infrastructure.GrpcClients.Sybase.Catalogos;
 
-public class SpiArchivoDat : ISpiArchivoDat
+public class CatalogoDat: ICatalogoDat
 {
     private readonly ILogs _logService;
     private readonly DAL.DALClient _objClientDal;
     private readonly ApiConfig _apiConfig;
     private readonly string _clase;
-    private readonly ILogger<SpiArchivoDat> _logger;
+    private readonly ILogger<CatalogoDat> _logger;
     
-    public SpiArchivoDat(ILogger<SpiArchivoDat> logger, ILogs logService, DAL.DALClient objClientDal, IOptionsMonitor<ApiConfig> apiConfig)
+    public CatalogoDat(ILogger<CatalogoDat> logger, ILogs logService, DAL.DALClient objClientDal, IOptions<ApiConfig> apiConfig)
     {
         _logger = logger;
         _logService = logService;
         _objClientDal = objClientDal;
-        _apiConfig = apiConfig.CurrentValue;
+        _apiConfig = apiConfig.Value;
         _clase = GetType().FullName!;
     }
-
-    public async Task<RespuestaTransaccion> GetTotalOpiCorte(ReqTotalOpiSp1 request)
+    
+    public async Task<RespuestaTransaccion> GetCatalogos(ReqGetCatalogo request)
     {
         var respuesta = new RespuestaTransaccion();
+
         try
         {
             var ds = new DatosSolicitud();
+            
             Funciones.LlenarDatosAuditoriaSalida( ds, request );
             
-            ds.NombreSP = "get_total_opis_corte";
+            ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@str_catalogo", TipoDato = TipoDato.VarChar, ObjValue = request.str_catalogo } );
+            ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@str_filtro", TipoDato = TipoDato.VarChar, ObjValue = request.str_filtro } );
+
+            ds.NombreSP = "get_catalogos_spi";
             ds.NombreBD = _apiConfig.db_meg_bce;
 
             var resultado = await _objClientDal.ExecuteDataSetAsync( ds );
@@ -48,12 +53,13 @@ public class SpiArchivoDat : ISpiArchivoDat
             respuesta.codigo = strCodigo.Trim().PadLeft( 3, '0' );
             respuesta.cuerpo = Funciones.ObtenerDatos( resultado );
             respuesta.diccionario.Add( "str_error", strError );
+    
         }
         catch (Exception e)
         {
-            respuesta.codigo = "001";
+            respuesta.codigo = "003";
             respuesta.diccionario.Add( "str_error", e.InnerException?.Message ?? e.Message );
-            _logger.LogError( e, "Ocurrió un error en stored procedure set_generar_archivo_spi1" );
+            _logger.LogError( e, "Ocurrió un error en stored procedure get_catalogos_spi" );
             _ = _logService.SaveExcepcionDataBaseSybase( request, MethodBase.GetCurrentMethod()!.Name, e, _clase );
             throw new ArgumentException( request.str_id_transaccion );
         }
@@ -61,15 +67,19 @@ public class SpiArchivoDat : ISpiArchivoDat
         return respuesta;
     }
 
-    public async Task<RespuestaTransaccion> GenerarSpi1(ReqGenerarSpi1 request)
+    public async Task<RespuestaTransaccion> GetIfis(ReqGetIfis request)
     {
         var respuesta = new RespuestaTransaccion();
+
         try
         {
             var ds = new DatosSolicitud();
+            
             Funciones.LlenarDatosAuditoriaSalida( ds, request );
             
-            ds.NombreSP = "set_generar_archivo_spi1";
+            ds.ListaPEntrada.Add( new ParametroEntrada { StrNameParameter = "@str_filtro", TipoDato = TipoDato.VarChar, ObjValue = request.str_filtro } );
+
+            ds.NombreSP = "get_ifis_spi";
             ds.NombreBD = _apiConfig.db_meg_bce;
 
             var resultado = await _objClientDal.ExecuteDataSetAsync( ds );
@@ -81,12 +91,13 @@ public class SpiArchivoDat : ISpiArchivoDat
             respuesta.codigo = strCodigo.Trim().PadLeft( 3, '0' );
             respuesta.cuerpo = Funciones.ObtenerDatos( resultado );
             respuesta.diccionario.Add( "str_error", strError );
+    
         }
         catch (Exception e)
         {
-            respuesta.codigo = "001";
+            respuesta.codigo = "003";
             respuesta.diccionario.Add( "str_error", e.InnerException?.Message ?? e.Message );
-            _logger.LogError( e, "Ocurrió un error en stored procedure set_generar_archivo_spi1" );
+            _logger.LogError( e, "Ocurrió un error en stored procedure get_ifis_spi" );
             _ = _logService.SaveExcepcionDataBaseSybase( request, MethodBase.GetCurrentMethod()!.Name, e, _clase );
             throw new ArgumentException( request.str_id_transaccion );
         }

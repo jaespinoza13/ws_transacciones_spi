@@ -1,9 +1,8 @@
 ﻿using Application.Common.ISO20022.Models;
-using Application.Common.Models;
 
-namespace Application.Features.Opis.Queries.Imprimir.OrdenPago;
+namespace Application.Features.Opis.Queries.Cuadre;
 
-public class ResImprimirOrdenPago : ResComun
+public class ResCuadreOpis : ResComun
 {
     public string? file_bytes { get; set; }
     public string? str_doc_extencion { get; set; }

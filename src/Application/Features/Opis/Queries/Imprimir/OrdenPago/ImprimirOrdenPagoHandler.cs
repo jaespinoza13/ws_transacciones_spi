@@ -45,27 +45,26 @@ public class ImprimirOrdenPagoHandler : IRequestHandler<ReqImprimirOrdenPago, Re
 
             if (respuestaTransaccion.codigo.Equals("000"))
             {
-                var detalleOpi =
-                    Conversions.ConvertToClass<DetalleOpi>((ConjuntoDatos)respuestaTransaccion.cuerpo);
+                var detalleOpi = Conversions.ConvertToClass<DetalleOpi>((ConjuntoDatos)respuestaTransaccion.cuerpo);
 
 
                 var bytes = request.str_tipo_ordenante switch
                 {
-                    "PROVEEDOR" => Autorizacion.GenerarOrdenPago(detalleOpi, _apiConfig),
+                    "PROVEEDOR" => Autorizacion.GenerarOrdenPago(detalleOpi, _apiConfig, request.str_tipo_documento),
                     _ => Autorizacion.GenerarInterbancaria(detalleOpi, _apiConfig)
                 };
 
                 if (bytes.Length > 0)
                 {
-                    respuesta.autorizacion.file_bytes = bytes;
-                    respuesta.autorizacion.str_doc_extencion = "application/pdf";
+                    respuesta.file_bytes = bytes;
+                    respuesta.str_doc_extencion = "application/pdf";
                     respuesta.str_res_codigo = "000";
                     respuesta.str_res_info_adicional = "Autorización generada correctamente";
                 }
                 else
                 {
-                    respuesta.autorizacion.file_bytes = null;
-                    respuesta.autorizacion.str_doc_extencion = null;
+                    respuesta.file_bytes = null;
+                    respuesta.str_doc_extencion = null;
                     respuesta.str_res_codigo = "999";
                     respuesta.str_res_info_adicional = "Error al generar la autorización";
                 }

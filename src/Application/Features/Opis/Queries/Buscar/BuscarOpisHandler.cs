@@ -55,6 +55,7 @@ public class BuscarOpisHandler : IRequestHandler<ReqBuscarOpis, ResBuscarOpis>
 
                 switch (request.str_tipo_transf)
                 {
+                    case "-1":
                     case "spi":
                     case "banred":
                         var modelTransferencias = _mapper.Map<IReadOnlyList<TransferenciaReporteVm>>( opis );

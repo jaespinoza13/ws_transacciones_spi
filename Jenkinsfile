@@ -15,6 +15,7 @@ pipeline {
         PUERTO              = '9031'
         PUERTO_CONTENEDOR   = '8080'
         RUTA_CONFIG 		= '/config/wsTransaccionesSPI'
+		RUTA_PLANTILLAS    = '/plantillas/spi'
     }
 
     stages {
@@ -45,6 +46,7 @@ pipeline {
                 sh  '''docker run --restart=always -it -dp ${PUERTO}:${PUERTO_CONTENEDOR} --name ${NOMBRE_CONTENEDOR} \
                         -e TZ=${TZ} \
 						-v ${RUTA_CONFIG}/appsettings.json:/app/appsettings.json \
+						-v ${RUTA_PLANTILLAS}:/app/Plantillas \
                         ${NOMBRE_IMAGEN}:${VERSION_DESPLIEGUE}
                     '''
             }
@@ -68,6 +70,7 @@ pipeline {
             sh  '''docker run --restart=always -it -dp ${PUERTO}:${PUERTO_CONTENEDOR} --name ${NOMBRE_CONTENEDOR} \
                         -e TZ=${TZ} \
                         -v ${RUTA_CONFIG}/appsettings.json:/app/appsettings.json \
+						-v ${RUTA_PLANTILLAS}:/app/Plantillas \
                         ${NOMBRE_IMAGEN}:${VERSION_PRODUCCION}
                     '''
             slackSend color: '#FE2D00', failOnError:true, message:"Despliegue fallido 😬 - ${env.JOB_NAME} he reversado a la version ${VERSION_PRODUCCION}  (<${env.BUILD_URL}|Open>)"

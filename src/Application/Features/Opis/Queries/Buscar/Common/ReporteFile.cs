@@ -24,8 +24,10 @@ public static class ReporteFile
         worksheet.Cells["A3"].Value = "Fecha Desde: ";
         worksheet.Cells["A4"].Value = "Fecha Hasta: ";
         worksheet.Cells["A3:A4"].Style.Font.Bold = true;
-        worksheet.Cells["B3:B4"].Value = new object[] { request.dtt_fecha_desde.ToString( "dd/MM/yyyy" ), request.dtt_fecha_hasta.ToString( "dd/MM/yyyy" ) };
-
+        
+        worksheet.Cells["B3"].Value = request.dtt_fecha_desde.ToString("dd/MM/yyyy");
+        worksheet.Cells["B4"].Value = request.dtt_fecha_hasta.ToString("dd/MM/yyyy");
+        
         var headerRow = worksheet.Cells["A6"].LoadFromCollection( opis, true, TableStyles.Light9 );
         headerRow.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
         headerRow.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
@@ -72,7 +74,9 @@ public static class ReporteFile
         worksheet.Cells["A3"].Value = "Fecha Desde: ";
         worksheet.Cells["A4"].Value = "Fecha Hasta: ";
         worksheet.Cells["A3:A4"].Style.Font.Bold = true;
-        worksheet.Cells["B3:B4"].Value = new object[] { request.dtt_fecha_desde.ToString( "dd/MM/yyyy" ), request.dtt_fecha_hasta.ToString( "dd/MM/yyyy" ) };
+        
+        worksheet.Cells["B3"].Value = request.dtt_fecha_desde.ToString("dd/MM/yyyy");
+        worksheet.Cells["B4"].Value = request.dtt_fecha_hasta.ToString("dd/MM/yyyy");
         
         var headerRow = worksheet.Cells["A6"].LoadFromCollection( opis, true, TableStyles.Light9 );
         headerRow.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;

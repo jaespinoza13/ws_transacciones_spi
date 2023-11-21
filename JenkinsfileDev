@@ -8,12 +8,12 @@ pipeline {
 
     environment 
     {
-        VERSION_DESPLIEGUE  = '1.0.1'
-        VERSION_PRODUCCION  = '1.0.0'
+        VERSION_DESPLIEGUE  = '1.0.3'
+        VERSION_PRODUCCION  = '1.0.2'
         NOMBRE_CONTENEDOR   = 'servicio-transacciones-spi'
         NOMBRE_IMAGEN       = 'ws_transacciones_spi'
         PUERTO              = '7020'
-        PUERTO_CONTENEDOR   = '80'
+        PUERTO_CONTENEDOR   = '8080'
         RUTA_CONFIG 		= '/config/wsTransaccionesSPI'
         RUTA_PLANTILLAS    = '/plantillas/spi'
     }

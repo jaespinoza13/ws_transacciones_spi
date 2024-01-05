@@ -1,25 +1,24 @@
 pipeline {
-    
+
     agent {
         node {
-            label 'web-service-production-server'
+            label 'microservicios-internos-production-server'
         }
     }
 
-    environment 
-    {
+    environment {
         VERSION_DESPLIEGUE  = '1.0.3'
         VERSION_PRODUCCION  = '1.0.2'
-        NOMBRE_CONTENEDOR   = 'servicio-transacciones-spi'
-        NOMBRE_IMAGEN       = 'ws_transacciones_spi'
-        PUERTO              = '9031'
+        NOMBRE_CONTENEDOR   = 'cnt-ws-transacciones-spi'
+        NOMBRE_IMAGEN       = 'img_ws_transacciones_spi'
+        PUERTO              = '9007'
         PUERTO_CONTENEDOR   = '8080'
-        RUTA_CONFIG 		= '/config/wsTransaccionesSPI'
-		RUTA_PLANTILLAS    = '/plantillas/spi'
+        RUTA_CONFIG         = '/config/wsTransaccionesSPI/'
+        RUTA_PLANTILLAS     = '/plantillas/spi/'
     }
 
     stages {
-        
+
         stage('Build') {
             steps {
                 echo 'Building ...'
@@ -45,8 +44,8 @@ pipeline {
                 echo 'Deploying ...'
                 sh  '''docker run --restart=always -it -dp ${PUERTO}:${PUERTO_CONTENEDOR} --name ${NOMBRE_CONTENEDOR} \
                         -e TZ=${TZ} \
-						-v ${RUTA_CONFIG}/appsettings.json:/app/appsettings.json \
-						-v ${RUTA_PLANTILLAS}:/app/Plantillas \
+                        -v ${RUTA_CONFIG}appsettings.json:/app/appsettings.json \
+                        -v ${RUTA_PLANTILLAS}:/app/Plantillas \
                         ${NOMBRE_IMAGEN}:${VERSION_DESPLIEGUE}
                     '''
             }
@@ -69,11 +68,12 @@ pipeline {
             sh  'docker rm -f ${NOMBRE_CONTENEDOR}'
             sh  '''docker run --restart=always -it -dp ${PUERTO}:${PUERTO_CONTENEDOR} --name ${NOMBRE_CONTENEDOR} \
                         -e TZ=${TZ} \
-                        -v ${RUTA_CONFIG}/appsettings.json:/app/appsettings.json \
-						-v ${RUTA_PLANTILLAS}:/app/Plantillas \
+                        -v ${RUTA_CONFIG}appsettings.json:/app/appsettings.json \
+                        -v ${RUTA_PLANTILLAS}:/app/Plantillas \
                         ${NOMBRE_IMAGEN}:${VERSION_PRODUCCION}
                     '''
             slackSend color: '#FE2D00', failOnError:true, message:"Despliegue fallido 😬 - ${env.JOB_NAME} he reversado a la version ${VERSION_PRODUCCION}  (<${env.BUILD_URL}|Open>)"
         }
     }
 }
+

@@ -10,9 +10,10 @@ public static class Autorizacion
     public static string GenerarAutorizacionPersonaNatural(AutorizacionTransfExterna autorizacion, ApiConfig apiConfig)
     {
         var pathPlantilla = $"{Directory.GetCurrentDirectory()}/{apiConfig.path_template_autorizacion_pn}";
+        var pathLogo = $"{Directory.GetCurrentDirectory()}/{apiConfig.path_logo_png}";
         
         var plantillaContent = File.ReadAllText( pathPlantilla );
-        plantillaContent = plantillaContent.Replace( "$str_logo$", apiConfig.path_logo_png );
+        plantillaContent = plantillaContent.Replace( "$str_logo$", pathLogo );
         plantillaContent = plantillaContent.Replace( "$str_mensaje$", autorizacion.str_mensaje );
         plantillaContent = plantillaContent.Replace( "$dtt_fecha$", DateTime.Now.ToString( "dd/MM/yyyy HH:mm" ) );
         plantillaContent = plantillaContent.Replace( "$int_codigo_opi$", autorizacion.int_codigo_opi.ToString() );
@@ -53,9 +54,10 @@ public static class Autorizacion
      public static string GenerarAutorizacionPersonaJuridica(AutorizacionTransfExterna autorizacion, ApiConfig apiConfig)
     {
         var pathPlantilla = $"{Directory.GetCurrentDirectory()}/{apiConfig.path_template_autorizacion_pj}";
+        var pathLogo = $"{Directory.GetCurrentDirectory()}/{apiConfig.path_logo_png}";
         
         var plantillaContent = File.ReadAllText( pathPlantilla );
-        plantillaContent = plantillaContent.Replace( "$str_logo$", apiConfig.path_logo_png );
+        plantillaContent = plantillaContent.Replace( "$str_logo$", pathLogo );
         plantillaContent = plantillaContent.Replace( "$str_mensaje$", autorizacion.str_mensaje );
         plantillaContent = plantillaContent.Replace( "$dtt_fecha$", DateTime.Now.ToString( "dd/MM/yyyy HH:mm" ) );
         plantillaContent = plantillaContent.Replace( "$int_codigo_opi$", autorizacion.int_codigo_opi.ToString() );

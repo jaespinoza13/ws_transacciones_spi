@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AUTORIZACIÓN $str_nombre_ord$</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 10pt;
+            color: black;
+            line-height: 1.2;
+        }
+
+        h4 {
+            text-align: center;
+        }
+
+        p {
+            text-align: justify;
+            line-height: 1.2;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 10pt;
+        }
+
+        .cabecera {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo {
+            width: 88px;
+            height: 88px;
+        }
+
+        .table-no-border {
+            border-collapse: collapse;
+            border: none;
+            width: 100%;
+        }
+
+        .table-no-border td {
+            border: none;
+            font-size: 8pt;
+            text-align: start;
+            display: table-cell;
+            inline-size: auto;
+            line-height: 1.2;
+        }
+
+        .left-content {
+            font-weight: bold;
+            width: 37%;
+            font-size: 7pt;
+            line-height: 1;
+        }
+
+        .right-content {
+            width: 50%;
+            text-align: center;
+            font-size: 8pt;
+            line-height: 1;
+        }
+
+        .text-bold {
+            font-weight: bold;
+        }
+
+        .firmas {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .table-firmas {
+            border-collapse: collapse;
+            border: none;
+            width: 100%;
+        }
+
+        .table-firmas tr td {
+            text-align: center;
+            font-size: 8pt;
+        }
+    </style>
+</head>
+
+<body>
+<div class="content-container">
+    <div class="cabecera">
+        <div class="logo">
+            <img src="$str_logo$" alt="logo" class="logo">
+        </div>
+        <div>
+            <h4>SOLICITUD Y AUTORIZACIÓN DE DÉBITO POR
+                TRANSFERENCIAS DE FONDOS A OTRAS INSTITUCIONES
+                FINANCIERAS</h4>
+        </div>
+    </div>
+    <div>
+        <p>$str_mensaje$</p>
+    </div>
+    <table class="table-no-border">
+        <tr>
+            <td class="left-content">Fecha(mm/dd/aaaa)/Hora de la Solicitud:</td>
+            <td class="right-content">$dtt_fecha$</td>
+        </tr>
+        <tr>
+            <td class="left-content">Número de Referencia:</td>
+            <td class="right-content">$int_codigo_opi$</td>
+        </tr>
+        <tr>
+            <td class="left-content">N° de Cuenta Débito:</td>
+            <td class="right-content">$str_num_cuenta_ord$</td>
+        </tr>
+        <tr>
+            <td class="left-content">N° de Cuenta Destino:</td>
+            <td class="right-content">$str_num_cuenta_benef$</td>
+        </tr>
+        <tr>
+            <td class="left-content">Tipo de Cuenta Destino:</td>
+            <td class="right-content">$str_tipo_cuenta_benef$</td>
+        </tr>
+        <tr>
+            <td class="left-content">Institución Financiera Destino:</td>
+            <td class="right-content">$str_banco_benef$</td>
+        </tr>
+        <tr>
+            <td class="left-content">Nombre del Titular de la Cta. Destino:</td>
+            <td class="right-content">$str_razon_social_benef$</td>
+        </tr>
+        <tr>
+            <td class="left-content">Cédula/RUC del Titular de la Cta. Destino:</td>
+            <td class="right-content">$str_cedula_ruc_benef$</td>
+        </tr>
+        <tr>
+            <td class="left-content">Valor a Transferir:</td>
+            <td class="right-content">$ $str_monto_opi$</td>
+        </tr>
+        <tr>
+            <td class="left-content">Motivo de la Transferencia:</td>
+            <td class="right-content">$str_observaciones$</td>
+        </tr>
+    </table>
+    <div>
+        <p>
+            $str_concepto$
+        </p>
+        <p>Conocedor de las penas de perjurio y de las disposiciones contenidas en la Ley relacionada con la
+            prevención de Lavado de Activos, declaro bajo juramento que los fondos que transfiero desde Cooperativa
+            de Cooperativa de Ahorro y Crédito Vicentina "Manuel Esteban Godoy Ortega" Ltda.; no serán destinados a la
+            realización
+            o financiamiento de ninguna actividad ilícita. Autorizo expresamente a Cooperativa de Ahorro y Crédito
+            Vicentina "Manuel Esteban Godoy Ortega" Ltda.; para que realice los análisis y verificaciones que
+            considere necesarios; así como, para que informe a las autoridades competentes en caso de llegar a
+            determinar que en mi cuenta de ahorros antes singularizada se han registrado/generado operaciones y/o
+            transacciones inusuales e injustificadas.</p>
+
+        <p>Las presentes solicitud y autorizaciones las realizo bajo mi absoluta responsabilidad, por lo que una vez
+            que las mismas sean procesadas por el personal autorizado de la Cooperativa, nada tengo que reclamar al
+            respecto ni a la Cooperativa ni a su personal</p>
+        <p class="text-bold">DECLARACIÓN:</p>
+        <p>Declaro que he leído, entiendo y me encuentro de acuerdo con los datos/información consignados en el
+            presente documento, razón por la que renuncio a presentar cualquier tipo de reclamación, acción judicial
+            o extrajudicial, civil/penal/administrativa, en contra de Cooperativa de Ahorro y Crédito Vicentina "Manuel
+            Esteban Godoy Ortega" Ltda.; o de sus trabajadores.</p>
+    </div>
+    <div class="firmas">
+        <table class="table-firmas">
+            <tr>
+                <td class="text-bold">______________________________________</td>
+                <td class="text-bold">______________________________________</td>
+            </tr>
+            <tr>
+                <td class="text-bold">SOCIO/CLIENTE</td>
+                <td class="text-bold">RECIBIDO POR:</td>
+            </tr>
+            <tr>
+                <td>$str_nombre_ord$</td>
+                <td>$str_usuario$</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>$str_oficina$</td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <p><span class="text-bold">Estimado Socio/Cliente: </span>Le informamos que la presente solicitud está
+            sujeta a revisión y aprobación por parte del personal de la Cooperativa. En caso de encontrar novedades,
+            estas serán comunicadas inmediatamente a su número de teléfono celular y/o correo electrónico
+            registrados en la Cooperativa, y por su seguridad esta transferencia no será procesada.</p>
+        <p>Si usted presentó la solicitud en nuestras oficinas hasta las 16:00, los fondos serán acreditados a la
+            cuenta que usted solicitó en el transcurso del día, posterior a la aprobación por parte del personal de
+            la Cooperativa; caso contrario se acreditarán los fondos en la cuenta destino a partir del siguiente día
+            hábil.</p>
+    </div>
+</div>
+</body>
+</html>

@@ -7,6 +7,4 @@ namespace WebApi.Controllers;
 [Route("api/v{version:apiVersion}/ws_[controller]")]
 [Produces("application/json")]
 [ApiController]
-public class BaseController : ControllerBase
-{
-}
+public class BaseController : ControllerBase;

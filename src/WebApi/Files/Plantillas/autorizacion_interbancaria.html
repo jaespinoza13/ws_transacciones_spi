@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AUTORIZACIÓN $str_nombre_ord$</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 10pt;
+            color: black;
+            line-height: 1.2;
+        }
+
+        h4 {
+            text-align: center;
+        }
+
+        p {
+            text-align: justify;
+            line-height: 1.2;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 10pt;
+        }
+
+        .cabecera {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo {
+            width: 88px;
+            height: 88px;
+        }
+
+        .table-no-border {
+            border-collapse: collapse;
+            border: none;
+            width: 100%;
+        }
+
+        .table-no-border td {
+            border: none;
+            font-size: 8pt;
+            text-align: start;
+            display: table-cell;
+            inline-size: auto;
+            line-height: 1.2;
+        }
+
+        .left-content {
+            font-weight: bold;
+            width: 37%;
+            font-size: 7pt;
+            line-height: 1;
+        }
+
+        .right-content {
+            width: 50%;
+            text-align: center;
+            font-size: 8pt;
+            line-height: 1;
+        }
+
+        .text-bold {
+            font-weight: bold;
+        }
+
+        .firmas {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .table-firmas {
+            border-collapse: collapse;
+            border: none;
+            width: 100%;
+        }
+
+        .table-firmas tr td {
+            text-align: center;
+            font-size: 8pt;
+        }
+    </style>
+</head>
+
+<body>
+<div class="content-container">
+    <div class="cabecera">
+        <div class="logo">
+            <img src="$str_logo$" alt="logo" class="logo">
+        </div>
+        <div>
+            <h4>SOLICITUD Y AUTORIZACIÓN DE DÉBITO POR
+                TRANSFERENCIAS DE FONDOS A OTRAS INSTITUCIONES
+                FINANCIERAS</h4>
+        </div>
+    </div>
+    <div>
+        <p>$str_mensaje$</p>
+    </div>
+    <table class="table-no-border">
+        <tr>
+            <td class="left-content">Fecha(mm/dd/aaaa)/Hora de la Solicitud:</td>
+            <td class="right-content">$dtt_fecha$</td>
+        </tr>
+        <tr>
+            <td class="left-content">Número de Referencia:</td>
+            <td class="right-content">$int_codigo_opi$</td>
+        </tr>
+        <tr>
+            <td class="left-content">N° de Cuenta Débito:</td>
+            <td class="right-content">$str_num_cuenta_ord$</td>
+        </tr>
+        <tr>
+            <td class="left-content">N° de Cuenta Destino:</td>
+            <td class="right-content">$str_num_cuenta_benef$</td>
+        </tr>
+        <tr>
+            <td class="left-content">Tipo de Cuenta Destino:</td>
+            <td class="right-content">$str_tipo_cuenta_benef$</td>
+        </tr>
+        <tr>
+            <td class="left-content">Institución Financiera Destino:</td>
+            <td class="right-content">$str_banco_benef$</td>
+        </tr>
+        <tr>
+            <td class="left-content">Nombre del Titular de la Cta. Destino:</td>
+            <td class="right-content">$str_razon_social_benef$</td>
+        </tr>
+        <tr>
+            <td class="left-content">Cédula/RUC del Titular de la Cta. Destino:</td>
+            <td class="right-content">$str_cedula_ruc_benef$</td>
+        </tr>
+        <tr>
+            <td class="left-content">Valor a Transferir:</td>
+            <td class="right-content">$ $str_monto_opi$</td>
+        </tr>
+        <tr>
+            <td class="left-content">Motivo de la Transferencia:</td>
+            <td class="right-content">$str_observaciones$</td>
+        </tr>
+    </table>
+    <div>
+        <p>
+            $str_concepto$
+        </p>
+        <p>Conocedor de las penas de perjurio y de las disposiciones contenidas en la Ley relacionada con la
+            prevención de Lavado de Activos, declaro bajo juramento que los fondos que transfiero desde Cooperativa
+            de Cooperativa de Ahorro y Crédito Vicentina "Manuel Esteban Godoy Ortega" Ltda.; no serán destinados a la
+            realización
+            o financiamiento de ninguna actividad ilícita. Autorizo expresamente a Cooperativa de Ahorro y Crédito
+            Vicentina "Manuel Esteban Godoy Ortega" Ltda.; para que realice los análisis y verificaciones que
+            considere necesarios; así como, para que informe a las autoridades competentes en caso de llegar a
+            determinar que en mi cuenta de ahorros antes singularizada se han registrado/generado operaciones y/o
+            transacciones inusuales e injustificadas.</p>
+
+        <p>Las presentes solicitud y autorizaciones las realizo bajo mi absoluta responsabilidad, por lo que una vez
+            que las mismas sean procesadas por el personal autorizado de la Cooperativa, nada tengo que reclamar al
+            respecto ni a la Cooperativa ni a su personal</p>
+        <p class="text-bold">DECLARACIÓN:</p>
+        <p>Declaro que he leído, entiendo y me encuentro de acuerdo con los datos/información consignados en el
+            presente documento, razón por la que renuncio a presentar cualquier tipo de reclamación, acción judicial
+            o extrajudicial, civil/penal/administrativa, en contra de Cooperativa de Ahorro y Crédito Vicentina "Manuel
+            Esteban Godoy Ortega" Ltda.; o de sus trabajadores.</p>
+    </div>
+    <div class="firmas">
+        <table class="table-firmas">
+            <tr>
+                <td class="text-bold">______________________________________</td>
+                <td class="text-bold">______________________________________</td>
+            </tr>
+            <tr>
+                <td class="text-bold">SOCIO/CLIENTE</td>
+                <td class="text-bold">RECIBIDO POR:</td>
+            </tr>
+            <tr>
+                <td>$str_nombre_ord$</td>
+                <td>$str_usuario$</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>$str_oficina$</td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <p><span class="text-bold">Estimado Socio/Cliente: </span>Le informamos que la presente solicitud está
+            sujeta a revisión y aprobación por parte del personal de la Cooperativa. En caso de encontrar novedades,
+            estas serán comunicadas inmediatamente a su número de teléfono celular y/o correo electrónico
+            registrados en la Cooperativa, y por su seguridad esta transferencia no será procesada.</p>
+        <p>Si usted presentó la solicitud en nuestras oficinas hasta las 16:00, los fondos serán acreditados a la
+            cuenta que usted solicitó en el transcurso del día, posterior a la aprobación por parte del personal de
+            la Cooperativa; caso contrario se acreditarán los fondos en la cuenta destino a partir del siguiente día
+            hábil.</p>
+    </div>
+</div>
+</body>
+</html>
+
+[usrdesmegonline@microservices spi]$ cat autorizacion_interbancaria.html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autorización $str_nombre_beneficiario$</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 9pt;
+            color: black;
+            line-height: 1.6;
+        }
+
+        h4,
+        h5 {
+            text-align: center;
+        }
+
+        span {
+            text-align: justify;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 9pt;
+        }
+
+        .content-container {
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .cabecera {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+        }
+
+        .content-info {
+            width: 100%;
+        }
+
+        .data {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+
+        }
+
+        .data-title {
+            text-align: left;
+            width: 70%;
+        }
+
+        .data-title span {
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .data-content {
+            margin-left: 1.5rem;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            justify-items: center;
+            align-content: flex-end;
+        }
+
+        .data-content span {
+            text-align: justify;
+        }
+
+        .firmas-container {
+            margin-top: 3rem;
+            width: 100%;
+            max-width: 100%;
+            display: flex;
+            justify-items: center;
+            align-items: center;
+            justify-content: center;
+
+        }
+
+        .firmas-content {
+            width: 100%;
+            text-align: center;
+        }
+
+        .firma-item span {
+            width: 100%;
+            text-align: center;
+            font-size: 8pt;
+        }
+
+        .firma-item-bold {
+            width: 100%;
+            font-weight: bold;
+            font-size: 8pt;
+        }
+
+        .data-body-title {
+            background-color: #e7e7e7;
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+<div class="content-container">
+    <div class="cabecera">
+        <div class="logo">
+            <img src="$str_logo$" alt="logo" class="logo">
+        </div>
+        <div>
+            <h4>Cooperativa de Ahorro y Crédito Vicentina “Manuel Esteban Godoy Ortega” Ltda. </h4>
+            <h5>AUTORIZACIÓN DE TRANSFERENCIA INTERBANCARIA</h5>
+        </div>
+    </div>
+    <div class="content-info">
+
+        <div class="data">
+            <div class="data-title">
+                <span>NÚMERO DE ORDEN:</span>
+            </div>
+            <div class="data-content">
+                <span>$int_codigo_opi$</span>
+            </div>
+        </div>
+        <div class="data">
+            <div class="data-title">
+                <span>FECHA DE INGRESO:</span>
+            </div>
+            <div class="data-content">
+                <span>$dtt_fecha_ingresa$</span>
+            </div>
+        </div>
+        <div class="data-body-title">
+            <div class="body-title">
+                <span>DATOS DEL ORDENANTE</span>
+            </div>
+        </div>
+        <div class="data">
+            <div class="data-title">
+                <span>NOMBRE DEL ORDENANTE:</span>
+            </div>
+            <div class="data-content">
+                <span>$str_nombre_ordenante$</span>
+            </div>
+        </div>
+        <div class="data">
+            <div class="data-title">
+                <span>NÚMERO DE RUC DEL ORDENANTE:</span>
+            </div>
+            <div class="data-content">
+                <span>$str_ident_ordenante$</span>
+            </div>
+        </div>
+        <div class="data">
+            <div class="data-title">
+                <span>NÚMERO DE CUENTA DEL ORDENANTE:</span>
+            </div>
+            <div class="data-content">
+                <span>$str_cta_ordenante$</span>
+            </div>
+        </div>
+        <div class="data">
+            <div class="data-title">
+                <span>TIPO DE CUENTA DEL ORDENANTE:</span>
+            </div>
+            <div class="data-content">
+                <span>$str_tipo_cta_ordenante$</span>
+            </div>
+        </div>
+        <div class="data-body-title">
+            <div class="body-title">
+                <span>DATOS DEL BENEFICIARIO</span>
+            </div>
+        </div>
+        <div class="data">
+            <div class="data-title">
+                <span>NOMBRE DEL BENEFICIARIO:</span>
+            </div>
+            <div class="data-content">
+                <span>$str_nombre_beneficiario$</span>
+            </div>
+        </div>
+        <div class="data">
+            <div class="data-title">
+                <span>NÚMERO DE CÉDULA/RUC BENEFICIARIO:</span>
+            </div>
+            <div class="data-content">
+                <span>$str_ident_beneficiario$</span>
+            </div>
+        </div>
+        <div class="data">
+            <div class="data-title">
+                <span>INSTITUCIÓN FINANCIERA DESTINO:</span>
+            </div>
+            <div class="data-content">
+                <span>$str_nombre_destino$</span>
+            </div>
+        </div>
+        <div class="data">
+            <div class="data-title">
+                <span>NÚMERO DE CUENTA DEL BENEFICIARIO:</span>
+            </div>
+            <div class="data-content">
+                <span>$str_cta_beneficiario$</span>
+            </div>
+        </div>
+        <div class="data">
+            <div class="data-title">
+                <span>TIPO DE CUENTA DEL BENEFICIARIO:</span>
+            </div>
+            <div class="data-content">
+                <span>$str_tipo_cta_beneficiario$</span>
+            </div>
+        </div>
+        <div class="data-body-title">
+            <div class="body-title">
+                <span>INFORMACIÓN DE LA TRANSFERENCIA</span>
+            </div>
+        </div>
+        <div class="data">
+            <div class="data-title">
+                <span>VALOR A TRANSFERIR:</span>
+            </div>
+            <div class="data-content">
+                <span>$ $dec_monto$</span>
+            </div>
+        </div>
+
+        <div class="data">
+            <div class="data-title">
+                <span>MOTIVO DE LA TRANSFERENCIA:</span>
+            </div>
+            <div class="data-content">
+                <span>$str_observaciones$</span>
+            </div>
+        </div>
+        <div class="data-body-title">
+            <div class="body-title">
+                <span>AUTORIZACIÓN</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="firmas-container">
+        <div class="firmas-content">
+            <div class="firma-item">
+                <span class="firma-item-bold">______________________</span>
+            </div>
+            <div class="firma-item">
+                <span class="firma-item-bold">INGRESADO POR:</span>
+            </div>
+            <div class="firma-item">
+                <span>$str_usuario_ingresa$</span>
+            </div>
+        </div>
+        <div class="firmas-content">
+            <div class="firma-item">
+                <span class="firma-item-bold">______________________</span>
+            </div>
+            <div class="firma-item">
+                <span class="firma-item-bold">REVISADO POR:</span>
+            </div>
+            <div class="firma-item">
+                <span>$str_usuario_revisa$</span>
+            </div>
+        </div>
+        <div class="firmas-content">
+            <div class="firma-item">
+                <span class="firma-item-bold">______________________</span>
+            </div>
+            <div class="firma-item">
+                <span class="firma-item-bold">APROBADO POR:</span>
+            </div>
+            <div class="firma-item">
+                <span>$str_usuario_aprueba$</span>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

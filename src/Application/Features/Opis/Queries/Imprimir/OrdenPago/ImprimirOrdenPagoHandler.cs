@@ -8,40 +8,28 @@ using Application.Common.Models;
 using Application.Features.Opis.Queries.Imprimir.OrdenPago.Common;
 using Application.Persistence;
 using Domain.Entities.Opis;
+using Newtonsoft.Json;
 
 
 namespace Application.Features.Opis.Queries.Imprimir.OrdenPago;
 
-public class ImprimirOrdenPagoHandler : IRequestHandler<ReqImprimirOrdenPago, ResImprimirOrdenPago>
+public class ImprimirOrdenPagoHandler(IOpisDat opisDat, ILogs logs, ILogger<ImprimirOrdenPagoHandler> logger, IOptionsMonitor<ApiConfig> apiConfig) : IRequestHandler<ReqImprimirOrdenPago, ResImprimirOrdenPago>
 {
-    private readonly IOpisDat _opisDat;
-    private readonly ILogs _logs;
-    private readonly string _clase;
-    private readonly ILogger<ImprimirOrdenPagoHandler> _logger;
-    private readonly ApiConfig _apiConfig;
-
-    public ImprimirOrdenPagoHandler(IOpisDat opisDat, ILogs logs, ILogger<ImprimirOrdenPagoHandler> logger, IOptionsMonitor<ApiConfig> apiConfig)
-    {
-        _opisDat = opisDat;
-        _logs = logs;
-        _clase = GetType().Name;
-        _logger = logger;
-        _apiConfig = apiConfig.CurrentValue;
-    }
-
-
+    private readonly ApiConfig _apiConfig = apiConfig.CurrentValue;
+    
     public async Task<ResImprimirOrdenPago> Handle(ReqImprimirOrdenPago request, CancellationToken cancellationToken)
     {
         var respuesta = new ResImprimirOrdenPago();
 
-        const string strOperacion = "GET_DETALLE_OPI";
+        const string strOperacion = "GET_IMPRIMIR_ORDEN";
         try
         {
             respuesta.LlenarResHeader(request);
 
-            _ = _logs.SaveHeaderLogs(request, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase);
+            logger.LogInformation("GET_IMPRIMIR_ORDEN.REQUEST: {request}", JsonConvert.SerializeObject(request));
+            _ = logs.SaveHeaderLogs(request, strOperacion, MethodBase.GetCurrentMethod()!.Name, GetType().Name);
 
-            var respuestaTransaccion = await _opisDat.ImprimirOrden(request);
+            var respuestaTransaccion = await opisDat.ImprimirOrden(request);
 
             if (respuestaTransaccion.codigo.Equals("000"))
             {
@@ -70,12 +58,18 @@ public class ImprimirOrdenPagoHandler : IRequestHandler<ReqImprimirOrdenPago, Re
                 }
             }
 
-            _ = _logs.SaveResponseLogs(respuesta, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase);
+            logger.LogInformation("GET_IMPRIMIR_ORDEN.RESPONSE: {respuesta}", JsonConvert.SerializeObject(respuesta));
+            _ = logs.SaveResponseLogs(respuesta, strOperacion, MethodBase.GetCurrentMethod()!.Name, GetType().Name);
+            
         }
         catch (Exception e)
         {
-            _ = _logs.SaveExceptionLogs(respuesta, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase, e);
-            _logger.LogError(e, "Ocurrió un error en ImprimirOrdenPagoHandler");
+            respuesta.str_res_codigo = "003";
+            respuesta.str_res_info_adicional = e.Message;
+            
+            logger.LogError("GET_IMPRIMIR_ORDEN.EXCEPTION: {e}", e);
+            _ = logs.SaveExceptionLogs(respuesta, strOperacion, MethodBase.GetCurrentMethod()!.Name, GetType().Name, e);
+            
             throw new ArgumentException(respuesta.str_id_transaccion);
         }
 

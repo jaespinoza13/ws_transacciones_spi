@@ -26,7 +26,9 @@ public static class Plantilla
 
         plantilla += "<table border=\"1\" cellpadding=\"2\" cellspacing=\"2\" style=\"font-family: 'Gill Sans MT'; font-size: x-small;\">";
         plantilla += "<tr><td colspan=\"8\"><b>DETALLE CLIENTES</b></td></tr>";
-        plantilla += "<tr style=\"text-align: center; background-color: #004cac; color: white;\"><td>Fecha</td><td>Ingresado</td><td>Referencia</td><td>Cuenta D&eacute;bito</td><td>Ordenante</td><td>Cuenta Destino</td><td>Banco Destino</td><td>Monto</td></tr>";
+        plantilla +=
+            "<tr style=\"text-align: center; background-color: #004cac; color: white;\"><td>Fecha</td><td>Ingresado</td><td>Referencia</td><td>Cuenta D&eacute;bito</td><td>Ordenante</td><td>Cuenta Destino</td><td>Banco Destino</td><td>Monto</td></tr>";
+
         foreach (var consolidado in clientes)
         {
             plantilla += "<tr style=\"text-align: center;\"><td>" + consolidado.dtt_fecha_registro_io.ToString( "MM/dd/yyyy HH:mm:ss" ) + "</td>";
@@ -38,11 +40,15 @@ public static class Plantilla
             plantilla += "<td>" + consolidado.str_banco + "</td>";
             plantilla += "<td style=\"text-align: right;\">" + consolidado.dec_monto_credito_opi + "</td></tr>";
         }
+
         plantilla += "<tr style=\"text-align: right; background-color: #95b0ec;\"><td colspan=\"7\"><b>SUBTOTAL:</b></td><td><b>" + totalClientes + "</b></td></tr>";
+
         if (proveedores.Count > 0)
         {
             plantilla += "<tr><td colspan=\"8\"><b>DETALLE PAGOS</b></td></tr>";
-            plantilla += "<tr style=\"text-align: center; background-color: #004cac; color: white;\"><td>Fecha Ingreso</td><td>Ingresado</td><td>Referencia</td><td>ID Proveedor</td><td>Proveedor</td><td>Cuenta Destino</td><td>Banco Destino</td><td>Valor</td></tr>";
+            plantilla +=
+                "<tr style=\"text-align: center; background-color: #004cac; color: white;\"><td>Fecha Ingreso</td><td>Ingresado</td><td>Referencia</td><td>ID Proveedor</td><td>Proveedor</td><td>Cuenta Destino</td><td>Banco Destino</td><td>Valor</td></tr>";
+
             foreach (var consolidado in proveedores)
             {
                 plantilla += "<tr style=\"text-align: center;\"><td>" + consolidado.dtt_fecha_registro_io.ToString( "MM/dd/yyyy HH:mm:ss" ) + "</td>";
@@ -54,13 +60,16 @@ public static class Plantilla
                 plantilla += "<td>" + consolidado.str_banco + "</td>";
                 plantilla += "<td style=\"text-align: right;\">" + consolidado.dec_monto_credito_opi + "</td></tr>";
             }
+
             plantilla += "<tr style=\"text-align: right; background-color: #95b0ec;\"><td colspan=\"7\"><b>SUBTOTAL:</b></td><td><b>" + totalProveedores + "</b></td></tr>";
         }
 
         if (interbancarias.Count > 0)
         {
             plantilla += "<tr><td colspan=\"8\"><b>DETALLE INTERBANCARIAS</b></td></tr>";
-            plantilla += "<tr style=\"text-align: center; background-color: #004cac; color: white;\"><td>Fecha Ingreso</td><td>Ingresado</td><td>Referencia</td><td>Cuenta D&eacute;bito</td><td>Ordenante</td><td>Cuenta Destino</td><td>Banco Destino</td><td>Valor</td></tr>";
+            plantilla +=
+                "<tr style=\"text-align: center; background-color: #004cac; color: white;\"><td>Fecha Ingreso</td><td>Ingresado</td><td>Referencia</td><td>Cuenta D&eacute;bito</td><td>Ordenante</td><td>Cuenta Destino</td><td>Banco Destino</td><td>Valor</td></tr>";
+
             foreach (var consolidado in interbancarias)
             {
                 plantilla += "<tr style=\"text-align: center;\"><td>" + consolidado.dtt_fecha_registro_io.ToString( "MM/dd/yyyy HH:mm:ss" ) + "</td>";
@@ -72,8 +81,10 @@ public static class Plantilla
                 plantilla += "<td>" + consolidado.str_banco + "</td>";
                 plantilla += "<td style=\"text-align: right;\">" + consolidado.dec_monto_credito_opi + "</td></tr>";
             }
+
             plantilla += "<tr style=\"text-align: right; background-color: #95b0ec;\"><td colspan=\"7\"><b>SUBTOTAL:</b></td><td><b>" + totalInterbancarias + "</b></td></tr>";
         }
+
         plantilla += "<tr style=\"text-align: right;\"><td colspan=\"7\"><b>TOTAL:</b></td><td><b>" + decTotalOpis + "</b></td></tr></table>";
         plantilla += "</body></html>";
 

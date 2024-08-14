@@ -15,9 +15,9 @@ using WebApi.Filters;
 namespace WebApi.Controllers;
 
 [Authorize( AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = Rol.SocioInvitadoInterno )]
-[ServiceFilter( typeof( CryptographyAesFilter ) )]
-[ServiceFilter( typeof( ClaimControlFilter ) )]
-[ServiceFilter( typeof( SessionControlFilter ) )]
+[ServiceFilter( typeof(CryptographyAesFilter) )]
+[ServiceFilter( typeof(ClaimControlFilter) )]
+[ServiceFilter( typeof(SessionControlFilter) )]
 [ProducesResponseType( typeof(ResBadRequestException), (int)HttpStatusCode.BadRequest )]
 [ProducesResponseType( typeof(ResException), (int)HttpStatusCode.Unauthorized )]
 [ProducesResponseType( typeof(ResException), (int)HttpStatusCode.InternalServerError )]
@@ -31,12 +31,15 @@ public class OpisController(IMediator mediator) : BaseController
     [HttpPost( "GET_DETALLE_OPI" )]
     [ProducesResponseType( typeof(ResDetalleOpi), (int)HttpStatusCode.OK )]
     public async Task<ResDetalleOpi> DetalleOpi(ReqDetalleOpi request) => await mediator.Send( request );
+
     [HttpPost( "GET_IMPRIMIR_ORDEN" )]
     [ProducesResponseType( typeof(ResImprimirOrdenPago), (int)HttpStatusCode.OK )]
     public async Task<ResImprimirOrdenPago> ImprimirOrden(ReqImprimirOrdenPago request) => await mediator.Send( request );
+
     [HttpPost( "GET_IMPRIMIR_TRANSFERENCIA" )]
     [ProducesResponseType( typeof(ResImprimirTransferencia), (int)HttpStatusCode.OK )]
     public async Task<ResImprimirTransferencia> ImprimirTransferencia(ReqImprimirTransferencia request) => await mediator.Send( request );
+
     [HttpPost( "GET_CUADRE_OPIS" )]
     [ProducesResponseType( typeof(ResCuadreOpis), (int)HttpStatusCode.OK )]
     public async Task<ResCuadreOpis> CuadreOpis(ReqCuadreOpis request) => await mediator.Send( request );

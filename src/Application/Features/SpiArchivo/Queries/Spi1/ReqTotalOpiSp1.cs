@@ -3,7 +3,4 @@ using MediatR;
 
 namespace Application.Features.SpiArchivo.Queries.Spi1;
 
-public class ReqTotalOpiSp1: Header, IRequest<ResTotalOpiSpi1>
-{
-    
-}
+public class ReqTotalOpiSp1: Header, IRequest<ResTotalOpiSpi1>;

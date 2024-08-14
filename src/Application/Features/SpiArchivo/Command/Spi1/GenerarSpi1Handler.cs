@@ -9,26 +9,14 @@ using Application.Common.Models;
 using Application.Features.SpiArchivo.Command.Spi1.Common;
 using Application.Persistence;
 using Domain.Entities.SpiArchivo;
+using Newtonsoft.Json;
 
 
 namespace Application.Features.SpiArchivo.Command.Spi1;
 
-public class GenerarSpi1Handler : IRequestHandler<ReqGenerarSpi1, ResGenerarSpi1>
+public class GenerarSpi1Handler(ISpiArchivoDat archivoDat, ILogs logs, ILogger<GenerarSpi1Handler> logger, IOptionsMonitor<ApiConfig> apiConfig) : IRequestHandler<ReqGenerarSpi1, ResGenerarSpi1>
 {
-    private readonly ISpiArchivoDat _spiArchivoDat;
-    private readonly ILogs _logs;
-    private readonly string _clase;
-    private readonly ILogger<GenerarSpi1Handler> _logger;
-    private readonly ApiConfig _apiConfig;
-
-    public GenerarSpi1Handler(ISpiArchivoDat archivoDat, ILogs logs, ILogger<GenerarSpi1Handler> logger, IOptionsMonitor<ApiConfig> apiConfig)
-    {
-        _spiArchivoDat = archivoDat;
-        _logs = logs;
-        _clase = GetType().Name;
-        _logger = logger;
-        _apiConfig = apiConfig.CurrentValue;
-    }
+    private readonly ApiConfig _apiConfig = apiConfig.CurrentValue;
 
 
     public async Task<ResGenerarSpi1> Handle(ReqGenerarSpi1 request, CancellationToken cancellationToken)
@@ -41,15 +29,19 @@ public class GenerarSpi1Handler : IRequestHandler<ReqGenerarSpi1, ResGenerarSpi1
         {
             respuesta.LlenarResHeader(request);
             
-            _ = _logs.SaveHeaderLogs( request, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
+            logger.LogInformation("SET_GENERAR_SPI1.REQUEST: {request}", JsonConvert.SerializeObject(request));
+            _ = logs.SaveHeaderLogs(request, strOperacion, MethodBase.GetCurrentMethod()!.Name, GetType().Name);
 
-            var resGenerarSpi1Dat = await _spiArchivoDat.GenerarSpi1( request );
+            var resGenerarSpi1Dat = await archivoDat.GenerarSpi1( request );
 
             if (resGenerarSpi1Dat.codigo != "000")
             {
                 respuesta.str_res_codigo = resGenerarSpi1Dat.codigo;
                 respuesta.str_res_info_adicional = resGenerarSpi1Dat.diccionario["str_error"];
-                _ = _logs.SaveResponseLogs( respuesta, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
+                
+                logger.LogError("SET_GENERAR_SPI1.ERROR: {respuestaTransaccion}", JsonConvert.SerializeObject(resGenerarSpi1Dat));
+                _ = logs.SaveResponseLogs(respuesta, strOperacion, MethodBase.GetCurrentMethod()!.Name, GetType().Name);
+                
                 return respuesta;
             }
 
@@ -70,12 +62,19 @@ public class GenerarSpi1Handler : IRequestHandler<ReqGenerarSpi1, ResGenerarSpi1
 
             respuesta.str_res_codigo = resConsolidado.codigo;
             respuesta.str_res_info_adicional = resConsolidado.diccionario["str_error"];
-            _ = _logs.SaveResponseLogs( respuesta, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase );
+                
+            logger.LogInformation("SET_GENERAR_SPI1.RESPONSE: {respuesta}", JsonConvert.SerializeObject(respuesta));
+            _ = logs.SaveResponseLogs(respuesta, strOperacion, MethodBase.GetCurrentMethod()!.Name, GetType().Name);
+            
         }
         catch (Exception e)
         {
-            _ = _logs.SaveExceptionLogs( respuesta, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase, e );
-            _logger.LogError( e, "Ocurrió un error en GenerarSpi1Handler" );
+            respuesta.str_res_codigo = "003";
+            respuesta.str_res_info_adicional = e.Message;
+            
+            logger.LogError("SET_GENERAR_SPI1.EXCEPTION: {e}", e);
+            _ = logs.SaveExceptionLogs(respuesta, strOperacion, MethodBase.GetCurrentMethod()!.Name, GetType().Name, e);
+            
             throw new ArgumentException( respuesta.str_id_transaccion );
         }
         return respuesta;

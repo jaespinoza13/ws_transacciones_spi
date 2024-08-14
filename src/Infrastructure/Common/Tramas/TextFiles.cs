@@ -5,6 +5,7 @@ namespace Infrastructure.Common.Tramas;
 public static class TextFiles
 {
     private static readonly object ObjetoBloqueoJson = new();
+
     private static readonly object ObjetoBloqueo = new();
 
     public static void RegistrarTramas(string strTramaRequest, string rutaArchivo)
@@ -21,10 +22,11 @@ public static class TextFiles
                 var fileName = Path.Combine( rutaArchivo, DateTime.Now.ToString( "yyyyMMdd" ) + ".txt" );
 
                 using var fs = File.Open( fileName, FileMode.Append, FileAccess.Write, FileShare.ReadWrite );
+
                 using (var writer = new StreamWriter( fs ))
                 {
 
-                    writer.WriteLine($"{DateTime.Now:HHmmssff} { strTramaRequest }");
+                    writer.WriteLine( $"{DateTime.Now:HHmmssff} {strTramaRequest}" );
                 }
 
                 fs.Close();
@@ -39,6 +41,7 @@ public static class TextFiles
     public static void RegistrarTramas(string strTipo, dynamic obj, string ruta)
     {
         var rutaArchivo = Directory.GetCurrentDirectory() + ruta;
+
         try
         {
             lock (ObjetoBloqueoJson)
@@ -51,6 +54,7 @@ public static class TextFiles
                 var fileName = Path.Combine( rutaArchivo, DateTime.Now.ToString( "yyyyMMdd" ) + ".txt" );
 
                 using var fs = File.Open( fileName, FileMode.Append, FileAccess.Write, FileShare.ReadWrite );
+
                 using (var writer = new StreamWriter( fs ))
                 {
                     writer.WriteLine( DateTime.Now.ToString( "HHmmssff" ) + " " + strTipo + JsonSerializer.Serialize( obj ) + " " );

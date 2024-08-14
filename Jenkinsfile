@@ -2,7 +2,7 @@ pipeline {
 
     agent {
         node {
-            label 'microservicios-internos-production-server'
+            label 'servidor-webservice-produccion'
         }
     }
 

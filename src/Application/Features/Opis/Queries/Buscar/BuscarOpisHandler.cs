@@ -9,29 +9,13 @@ using Application.Features.Opis.Vm;
 using Application.Persistence;
 using AutoMapper;
 using Domain.Entities.Opis;
+using Newtonsoft.Json;
 
 
 namespace Application.Features.Opis.Queries.Buscar;
 
-public class BuscarOpisHandler : IRequestHandler<ReqBuscarOpis, ResBuscarOpis>
+public class BuscarOpisHandler(IOpisDat opisDat, IMapper mapper, ILogs logs, ILogger<BuscarOpisHandler> logger) : IRequestHandler<ReqBuscarOpis, ResBuscarOpis>
 {
-    private readonly IOpisDat _opisDat;
-    private readonly IMapper _mapper;
-    private readonly ILogs _logs;
-    private readonly string _clase;
-    private readonly ILogger<BuscarOpisHandler> _logger;
-
-
-    public BuscarOpisHandler(IOpisDat opisDat, IMapper mapper, ILogs logs, ILogger<BuscarOpisHandler> logger)
-    {
-        _opisDat = opisDat;
-        _mapper = mapper;
-        _logs = logs;
-        _clase = GetType().Name;
-        _logger = logger;
-    }
-    
-
     public async Task<ResBuscarOpis> Handle(ReqBuscarOpis request, CancellationToken cancellationToken)
     {
         var respuesta = new ResBuscarOpis();
@@ -42,9 +26,10 @@ public class BuscarOpisHandler : IRequestHandler<ReqBuscarOpis, ResBuscarOpis>
         {
             respuesta.LlenarResHeader(request);
 
-            _ = _logs.SaveHeaderLogs(request, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase);
+            logger.LogInformation("GET_BUSCAR_OPIS.REQUEST: {request}", JsonConvert.SerializeObject(request));
+            _ = logs.SaveHeaderLogs(request, strOperacion, MethodBase.GetCurrentMethod()!.Name, GetType().Name);
 
-            var respuestaTransaccion = await _opisDat.BuscarOpis(request);
+            var respuestaTransaccion = await opisDat.BuscarOpis(request);
             
             if (respuestaTransaccion.codigo.Equals("000"))
             {
@@ -58,11 +43,11 @@ public class BuscarOpisHandler : IRequestHandler<ReqBuscarOpis, ResBuscarOpis>
                     case "-1":
                     case "spi":
                     case "banred":
-                        var modelTransferencias = _mapper.Map<IReadOnlyList<TransferenciaReporteVm>>( opis );
+                        var modelTransferencias = mapper.Map<IReadOnlyList<TransferenciaReporteVm>>( opis );
                         respuesta.str_reporte_base64 = ReporteFile.GenerarReporteTransferencias( request, modelTransferencias );
                         break;
                     case "proveedores":
-                        var modelProveedores = _mapper.Map<IReadOnlyList<ProveedorReporteVm>>( opis );
+                        var modelProveedores = mapper.Map<IReadOnlyList<ProveedorReporteVm>>( opis );
                         respuesta.str_reporte_base64 = ReporteFile.GenerarReporteProveedores( request, modelProveedores );
                         break;
                     default:
@@ -73,12 +58,16 @@ public class BuscarOpisHandler : IRequestHandler<ReqBuscarOpis, ResBuscarOpis>
 
             respuesta.str_res_codigo = respuestaTransaccion.codigo;
             respuesta.str_res_info_adicional = respuestaTransaccion.diccionario["str_error"];
-            _ = _logs.SaveResponseLogs(respuesta, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase);
+            
+            logger.LogInformation("GET_BUSCAR_OPIS.RESPONSE: {respuesta}", JsonConvert.SerializeObject(respuesta));
+            _ = logs.SaveResponseLogs(respuesta, strOperacion, MethodBase.GetCurrentMethod()!.Name, GetType().Name);
+            
         }
         catch (Exception e)
         {
-            _ = _logs.SaveExceptionLogs(respuesta, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase, e);
-            _logger.LogError(e, "Ocurrió un error en BuscarOpisHandler");
+            logger.LogError("GET_BUSCAR_OPIS.EXCEPTION: {e}", e);
+            _ = logs.SaveExceptionLogs(respuesta, strOperacion, MethodBase.GetCurrentMethod()!.Name, GetType().Name, e);
+
             throw new ArgumentException(respuesta.str_id_transaccion);
         }
 

@@ -8,13 +8,14 @@ pipeline {
 
     environment {
         VERSION_DESPLIEGUE  = '1.0.3'
-        VERSION_PRODUCCION  = '1.0.2'
+        VERSION_PRODUCCION  = '1.0.4'
         NOMBRE_CONTENEDOR   = 'cnt-ws-transacciones-spi'
         NOMBRE_IMAGEN       = 'img_ws_transacciones_spi'
         PUERTO              = '9007'
         PUERTO_CONTENEDOR   = '8080'
         RUTA_CONFIG         = '/config/wsTransaccionesSPI/'
         RUTA_PLANTILLAS     = '/plantillas/spi/'
+        RUTA_LOGOS          = '/logos/'
     }
 
     stages {
@@ -46,6 +47,7 @@ pipeline {
                         -e TZ=${TZ} \
                         -v ${RUTA_CONFIG}appsettings.json:/app/appsettings.json \
                         -v ${RUTA_PLANTILLAS}:/app/Plantillas \
+                        -v ${RUTA_LOGOS}:/app/Logos \
                         ${NOMBRE_IMAGEN}:${VERSION_DESPLIEGUE}
                     '''
             }
@@ -70,6 +72,7 @@ pipeline {
                         -e TZ=${TZ} \
                         -v ${RUTA_CONFIG}appsettings.json:/app/appsettings.json \
                         -v ${RUTA_PLANTILLAS}:/app/Plantillas \
+                        -v ${RUTA_LOGOS}:/app/Logos \
                         ${NOMBRE_IMAGEN}:${VERSION_PRODUCCION}
                     '''
             slackSend color: '#FE2D00', failOnError:true, message:"Despliegue fallido 😬 - ${env.JOB_NAME} he reversado a la version ${VERSION_PRODUCCION}  (<${env.BUILD_URL}|Open>)"

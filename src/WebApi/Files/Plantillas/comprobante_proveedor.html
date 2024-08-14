@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprobante $str_nombre_beneficiario$</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 9pt;
+            color: black;
+            line-height: 1.6;
+        }
+
+        h4,
+        h5 {
+            text-align: center;
+        }
+
+        span {
+            text-align: justify;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 9pt;
+        }
+
+        .content-container {
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .cabecera {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+        }
+
+        .content-info {
+            width: 100%;
+        }
+
+        .data {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+
+        }
+
+        .data-title {
+            text-align: left;
+            width: 67%;
+        }
+
+        .data-title span {
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .data-content {
+            margin-left: 1.5rem;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            justify-items: center;
+            align-content: flex-end;
+        }
+
+        .data-content span {
+            text-align: justify;
+        }
+
+        .data-body-title {
+            background-color: #e7e7e7;
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+<div class="content-container">
+    <div class="cabecera">
+        <div class="logo">
+            <img src="$str_logo$" alt="logo" class="logo">
+        </div>
+        <div>
+            <h4>Cooperativa de Ahorro y Crédito Vicentina “Manuel Esteban Godoy Ortega” Ltda. </h4>
+            <h5>COMPROBANTE DE TRANSFERENCIA</h5>
+        </div>
+    </div>
+    <div class="content-info">
+
+        <div class="data">
+            <div class="data-title">
+                <span>NÚMERO DE ORDEN:</span>
+            </div>
+            <div class="data-content">
+                <span>$int_codigo_opi$</span>
+            </div>
+        </div>
+        <div class="data-body-title">
+            <div class="body-title">
+                <span>DATOS DEL PROVEEDOR</span>
+            </div>
+        </div>
+        <div class="data">
+            <div class="data-title">
+                <span>RAZÓN SOCIAL:</span>
+            </div>
+            <div class="data-content">
+                <span>$str_nombre_beneficiario$</span>
+            </div>
+        </div>
+        <div class="data">
+            <div class="data-title">
+                <span>NOMBRE COMERCIAL:</span>
+            </div>
+            <div class="data-content">
+                <span>$str_nombre_comercial_ord$</span>
+            </div>
+        </div>
+        <div class="data">
+            <div class="data-title">
+                <span>RUC:</span>
+            </div>
+            <div class="data-content">
+                <span>$str_ident_beneficiario$</span>
+            </div>
+        </div>
+        <div class="data">
+            <div class="data-title">
+                <span>INSTITUCIÓN FINANCIERA:</span>
+            </div>
+            <div class="data-content">
+                <span>$str_nombre_destino$</span>
+            </div>
+        </div>
+        <div class="data">
+            <div class="data-title">
+                <span>NÚMERO DE CUENTA:</span>
+            </div>
+            <div class="data-content">
+                <span>$str_cta_beneficiario$</span>
+            </div>
+        </div>
+        <div class="data">
+            <div class="data-title">
+                <span>TIPO DE CUENTA:</span>
+            </div>
+            <div class="data-content">
+                <span>$str_tipo_cta_beneficiario$</span>
+            </div>
+        </div>
+        <div class="data">
+            <div class="data-title">
+                <span>TITULAR DE LA CUENTA:</span>
+            </div>
+            <div class="data-content">
+                <span>$str_nombre_cta_beneficiario$</span>
+            </div>
+        </div>
+        <div class="data">
+            <div class="data-title">
+                <span>IDENTIFICACIÓN TITULAR CUENTA:</span>
+            </div>
+            <div class="data-content">
+                <span>$str_id_cta_beneficiario$</span>
+            </div>
+        </div>
+        <div class="data-body-title">
+            <div class="body-title">
+                <span>DATOS DEL PAGO</span>
+            </div>
+        </div>
+        <div class="data">
+            <div class="data-title">
+                <span>FECHA DE INGRESO:</span>
+            </div>
+            <div class="data-content">
+                <span>$dtt_fecha_ingresa$</span>
+            </div>
+        </div>
+        <div class="data">
+            <div class="data-title">
+                <span>MONTO A PAGAR:</span>
+            </div>
+            <div class="data-content">
+                <span>$ $dec_monto$</span>
+            </div>
+        </div>
+        <div class="data">
+            <div class="data-title">
+                <span>TIPO DE COMPROBANTE DE VENTA:</span>
+            </div>
+            <div class="data-content">
+                <span>$str_tipo_comprobante$</span>
+            </div>
+        </div>
+        <div class="data">
+            <div class="data-title">
+                <span>NÚMERO DE COMPROBANTE DE VENTA:</span>
+            </div>
+            <div class="data-content">
+                <span>$str_num_combrobante$</span>
+            </div>
+        </div>
+        <div class="data">
+            <div class="data-title">
+                <span>CONCEPTO DE PAGO:</span>
+            </div>
+            <div class="data-content">
+                <span>$str_observaciones$</span>
+            </div>
+        </div>
+        <div class="data-body-title">
+            <div class="body-title">
+                <span>INFORMACIÓN DEL PAGO</span>
+            </div>
+        </div>
+        <div class="data">
+            <div class="data-title">
+                <span>OFICINA:</span>
+            </div>
+            <div class="data-content">
+                <span>$str_oficina_origen$</span>
+            </div>
+        </div>
+        <div class="data">
+            <div class="data-title">
+                <span>TRAMITADO POR:</span>
+            </div>
+            <div class="data-content">
+                <span>$str_tramitado$</span>
+            </div>
+        </div>
+        <div class="data">
+            <div class="data-title">
+                <span>VALOR DEL COMPROBANTE DE VENTA:</span>
+            </div>
+            <div class="data-content">
+                <span>$ $dec_valor_factura$</span>
+            </div>
+        </div>
+        <div class="data">
+            <div class="data-title">
+                <span>N° COMPROBANTE DE RETENCIÓN:</span>
+            </div>
+            <div class="data-content">
+                <span>$str_num_retencion$</span>
+            </div>
+        </div>
+        <div class="data">
+            <div class="data-title">
+                <span>N° COMPROBANTE CONTABLE:</span>
+            </div>
+            <div class="data-content">
+                <span>$str_planilla_contable$</span>
+            </div>
+        </div>
+        <div class="data">
+            <div class="data-title">
+                <span>N° SOLICITUD DE PAGO:</span>
+            </div>
+            <div class="data-content">
+                <span>$str_solicitud_pago$</span>
+            </div>
+        </div>
+        <div class="data">
+            <div class="data-title">
+                <span>OBSERVACIONES DEL PAGO:</span>
+            </div>
+            <div class="data-content">
+                <span>$str_info_adicional$</span>
+            </div>
+        </div>
+        <div class="data-body-title">
+            <div class="body-title">
+                <span>APROBACIONES</span>
+            </div>
+        </div>
+        <div class="data">
+            <div class="data-title">
+                <span>ESTADO:</span>
+            </div>
+            <div class="data-content">
+                <span>$str_estado_interno$</span>
+            </div>
+        </div>
+        <div class="data">
+            <div class="data-title">
+                <span>INGRESADO POR:</span>
+            </div>
+            <div class="data-content">
+                <span>$str_usuario_ingresa$</span>
+            </div>
+        </div>
+        <div class="data">
+            <div class="data-title">
+                <span>FECHA/HORA INGRESO:</span>
+            </div>
+            <div class="data-content">
+                <span>$dtt_fecha_ingresa$</span>
+            </div>
+        </div>
+        <div class="data">
+            <div class="data-title">
+                <span>REVISADO POR:</span>
+            </div>
+            <div class="data-content">
+                <span>$str_usuario_revisa$</span>
+            </div>
+        </div>
+        <div class="data">
+            <div class="data-title">
+                <span>FECHA/HORA REVISIÓN:</span>
+            </div>
+            <div class="data-content">
+                <span>$dtt_fecha_revisa$</span>
+            </div>
+        </div>
+        <div class="data">
+            <div class="data-title">
+                <span>APROBADO POR:</span>
+            </div>
+            <div class="data-content">
+                <span>$str_usuario_aprueba$</span>
+            </div>
+        </div>
+        <div class="data">
+            <div class="data-title">
+                <span>FECHA/HORA APROBACIÓN:</span>
+            </div>
+            <div class="data-content">
+                <span>$dtt_fecha_aprueba$</span>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

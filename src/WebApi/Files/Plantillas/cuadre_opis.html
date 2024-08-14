@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CUADRE OPIS $dtt_fecha$</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+            line-height: 10pt;
+            font-size: 9pt;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .titles {
+            margin: 0;
+            padding: 0;
+        }
+
+        .title {
+            font-size: 11pt;
+            font-weight: bold;
+        }
+
+        .subtitle {
+            font-size: 10pt;
+            font-weight: bold;
+        }
+
+        .sub-header {
+            margin-top: 0.5em;
+            text-align: left;
+
+        }
+
+        .sub-header-title {
+            margin: 0.2em;
+            padding: 0.2em;
+        }
+
+        .bold-sub-header {
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 0 1em 0;
+            caption-side: top;
+            text-align: center;
+            border: 1px solid #000;
+            font-size: 8pt;
+        }
+
+        caption {
+            font-size: 11pt;
+            font-weight: bold;
+            padding: 0.3em;
+            margin-bottom: 1em;
+        }
+
+        th, td {
+            padding: 0.3em;
+            text-align: center;
+            align-items: center;
+            font-size: 8pt;
+            border: 1px solid #000;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: center;
+            margin-top: 0.2em;
+            font-weight: bold;
+            padding: 0.5em;
+        }
+
+        .footer-firmas {
+            text-align: center;
+            padding: 0.6em;
+            margin: 0;
+        }
+
+        .footer-uso-interno {
+            font-size: 7pt;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <img class="logo"
+         src="$str_logo$"
+         alt="Logo">
+    <div class="titles">
+        <p class="title">Cooperativa de Ahorro y Crédito Vicentina “Manuel Esteban Godoy Ortega” Ltda.</p>
+        <p class="subtitle">SISTEMA DE PAGOS Y TRANSFERENCIAS</p>
+    </div>
+</div>
+<div class="sub-header">
+    <p class="sub-header-title"><span class="bold-sub-header">Fecha de Proceso:</span> $dtt_fecha$</p>
+    <p class="sub-header-title"><span class="bold-sub-header">Total de Transferencias:</span> $int_total_opis$</p>
+    <p class="sub-header-title"><span class="bold-sub-header">Monto Total:</span> $int_monto_total_opis$</p>
+    <p class="sub-header-title"><span class="bold-sub-header">Usuario:</span> $str_login$</p>
+</div>
+<table>
+    <caption>Reporte Cuadre de Transferencias Interbancarias</caption>
+
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">CTA ORDENANTE</th>
+        <th scope="col">ORDENANTE</th>
+        <th scope="col">CTA BENEFICIARIO</th>
+        <th scope="col">BENEFICIARIO</th>
+        <th scope="col">BANCO DESTINO</th>
+        <th scope="col">CANAL</th>
+        <th scope="col">ESTADO</th>
+        <th scope="col">MONTO</th>
+    </tr>
+
+
+    $str_tabla_opis$
+
+
+    <tr>
+        <td colspan="7">TOTAL</td>
+        <td colspan="2">$int_monto_total_opis$</td>
+    </tr>
+
+</table>
+<div class="footer-content">
+    <div class="footer-firmas">
+        <p>______________________________</p>
+        <span>Generado Por: </span>
+        <span>$str_login$</span>
+    </div>
+    <div class="footer-firmas">
+        <p>______________________________</p>
+        <span>Revisado Por: </span>
+    </div>
+</div>
+<div class="footer-uso-interno">
+    <p>____________________Uso Interno___________________</p>
+</div>
+
+</body>
+
+</html>

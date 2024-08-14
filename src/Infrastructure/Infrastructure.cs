@@ -20,7 +20,6 @@ public static class Infrastructure
         services.AddSingleton<IMongoDat, LogsMongoDat>();
 
         services.AddTransient<ISessionControl, SessionControl.SessionControl>();
-        services.AddTransient<IHttpService, HttpService>();
         
         services.AddSingleton<ISessionDat, SessionDat>();
         services.AddSingleton<IKeysDat, KeysDat>();

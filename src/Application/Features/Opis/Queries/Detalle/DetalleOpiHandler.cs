@@ -6,44 +6,34 @@ using Application.Common.Interfaces;
 using Application.Common.Models;
 using Application.Persistence;
 using Domain.Entities.Opis;
+using Newtonsoft.Json;
 
 namespace Application.Features.Opis.Queries.Detalle;
 
-public class DetalleOpiHandler : IRequestHandler<ReqDetalleOpi, ResDetalleOpi>
+public class DetalleOpiHandler(IOpisDat opisDat, ILogs logs, ILogger<DetalleOpiHandler> logger) : IRequestHandler<ReqDetalleOpi, ResDetalleOpi>
 {
-    private readonly IOpisDat _opisDat;
-    private readonly ILogs _logs;
-    private readonly string _clase;
-    private readonly ILogger<DetalleOpiHandler> _logger;
-
-    public DetalleOpiHandler(IOpisDat opisDat, ILogs logs, ILogger<DetalleOpiHandler> logger)
-    {
-        _opisDat = opisDat;
-        _logs = logs;
-        _clase = GetType().Name;
-        _logger = logger;
-    }
-
     public async Task<ResDetalleOpi> Handle(ReqDetalleOpi request, CancellationToken cancellationToken)
     {
         var respuesta = new ResDetalleOpi();
 
         const string strOperacion = "GET_DETALLE_OPI";
+
         try
         {
-            respuesta.LlenarResHeader(request);
+            respuesta.LlenarResHeader( request );
 
-            _ = _logs.SaveHeaderLogs(request, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase);
+            logger.LogInformation("GET_DETALLE_OPI.REQUEST: {request}", JsonConvert.SerializeObject(request));
+            _ = logs.SaveHeaderLogs(request, strOperacion, MethodBase.GetCurrentMethod()!.Name, GetType().Name);
 
-            var respuestaTransaccion = await _opisDat.DetalleOpi(request);
+            var respuestaTransaccion = await opisDat.DetalleOpi( request );
 
-            if (respuestaTransaccion.codigo.Equals("000"))
+            if (respuestaTransaccion.codigo.Equals( "000" ))
             {
-                var detalleOpi = Conversions.ConvertToClass<DetalleOpi>((ConjuntoDatos)respuestaTransaccion.cuerpo);
+                var detalleOpi = Conversions.ConvertToClass<DetalleOpi>( (ConjuntoDatos)respuestaTransaccion.cuerpo );
 
-                if (detalleOpi.str_tipo_ordenante.Equals("CLIENTE"))
+                if (detalleOpi.str_tipo_ordenante.Equals( "CLIENTE" ))
                 {
-                    var condiciones = Conversions.ConvertToList<FirmanteCuenta>((ConjuntoDatos)respuestaTransaccion.cuerpo, 1);
+                    var condiciones = Conversions.ConvertToList<FirmanteCuenta>( (ConjuntoDatos)respuestaTransaccion.cuerpo, 1 );
                     respuesta.lst_condiciones = (List<FirmanteCuenta>)condiciones;
                 }
 
@@ -52,13 +42,20 @@ public class DetalleOpiHandler : IRequestHandler<ReqDetalleOpi, ResDetalleOpi>
 
             respuesta.str_res_codigo = respuestaTransaccion.codigo;
             respuesta.str_res_info_adicional = respuestaTransaccion.diccionario["str_error"];
-            _ = _logs.SaveResponseLogs(respuesta, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase);
+            
+            logger.LogInformation("GET_DETALLE_OPI.RESPONSE: {respuesta}", JsonConvert.SerializeObject(respuesta));
+            _ = logs.SaveResponseLogs(respuesta, strOperacion, MethodBase.GetCurrentMethod()!.Name, GetType().Name);
+            
         }
         catch (Exception e)
         {
-            _ = _logs.SaveExceptionLogs(respuesta, strOperacion, MethodBase.GetCurrentMethod()!.Name, _clase, e);
-            _logger.LogError(e, "Ocurrió un error en DetalleOpiHandler");
-            throw new ArgumentException(respuesta.str_id_transaccion);
+            respuesta.str_res_codigo = "003";
+            respuesta.str_res_info_adicional = e.Message;
+            
+            logger.LogError("GET_DETALLE_OPI.EXCEPTION: {e}", e);
+            _ = logs.SaveExceptionLogs(respuesta, strOperacion, MethodBase.GetCurrentMethod()!.Name, GetType().Name, e);
+            
+            throw new ArgumentException( respuesta.str_id_transaccion );
         }
 
         return respuesta;

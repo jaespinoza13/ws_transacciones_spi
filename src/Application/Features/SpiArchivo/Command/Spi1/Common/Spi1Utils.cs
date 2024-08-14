@@ -8,7 +8,7 @@ namespace Application.Features.SpiArchivo.Command.Spi1.Common;
 
 public static class Spi1Utils
 {
-    public static async Task<(byte[] fileContents, string md5Hash)> GenerateSpi1TxtAndMd5(CabeceraSpi1 cabeceraSpi1, IEnumerable<DetalleSpi1> lstDetalleSpi)
+    public async static Task<(byte[] fileContents, string md5Hash)> GenerateSpi1TxtAndMd5(CabeceraSpi1 cabeceraSpi1, IEnumerable<DetalleSpi1> lstDetalleSpi)
     {
         using var stream = new MemoryStream();
         await using var writer = new StreamWriter( stream );
@@ -25,7 +25,6 @@ public static class Spi1Utils
         }
 
         await writer.FlushAsync();
-        await writer.DisposeAsync();
 
         var fileContents = stream.ToArray();
 

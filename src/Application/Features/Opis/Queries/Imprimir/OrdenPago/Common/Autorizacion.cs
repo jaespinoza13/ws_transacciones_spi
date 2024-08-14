@@ -44,7 +44,8 @@ public static class Autorizacion
     {
         const string formatMoney = "0.00";
         var plantillaContent = File.ReadAllText( pathPlantilla );
-        plantillaContent = plantillaContent.Replace( "$str_logo$", apiConfig.path_logo_png );
+        var pathLogo = $"{Directory.GetCurrentDirectory()}/{apiConfig.path_logo_png}";
+        plantillaContent = plantillaContent.Replace( "$str_logo$", pathLogo);
         plantillaContent = plantillaContent.Replace( "$str_nombre_beneficiario$", orden.str_nombre_beneficiario );
         plantillaContent = plantillaContent.Replace( "$int_codigo_opi$", orden.int_codigo_opi.ToString() );
         plantillaContent = plantillaContent.Replace( "$str_nombre_beneficiario$", orden.str_nombre_beneficiario );
@@ -76,7 +77,8 @@ public static class Autorizacion
     {
         const string formatMoney = "0.00";
         var plantillaContent = File.ReadAllText( pathPlantilla );
-        plantillaContent = plantillaContent.Replace( "$str_logo$", apiConfig.path_logo_png );
+        var pathLogo = $"{Directory.GetCurrentDirectory()}/{apiConfig.path_logo_png}";
+        plantillaContent = plantillaContent.Replace( "$str_logo$", pathLogo);
         plantillaContent = plantillaContent.Replace( "$str_nombre_beneficiario$", orden.str_nombre_beneficiario );
         plantillaContent = plantillaContent.Replace( "$int_codigo_opi$", orden.int_codigo_opi.ToString() );
         plantillaContent = plantillaContent.Replace( "$str_nombre_beneficiario$", orden.str_nombre_beneficiario );
@@ -112,8 +114,9 @@ public static class Autorizacion
     {
         const string formatMoney = "0.00";
         var pathPlantilla = $"{Directory.GetCurrentDirectory()}/{apiConfig.path_template_autorizacion_interbancaria}";
+        var pathLogo = $"{Directory.GetCurrentDirectory()}/{apiConfig.path_logo_png}";
         var plantillaContent = File.ReadAllText( pathPlantilla );
-        plantillaContent = plantillaContent.Replace( "$str_logo$", apiConfig.path_logo_png );
+        plantillaContent = plantillaContent.Replace( "$str_logo$", pathLogo );
         plantillaContent = plantillaContent.Replace( "$int_codigo_opi$", orden.int_codigo_opi.ToString() );
         plantillaContent = plantillaContent.Replace( "$str_nombre_beneficiario$", orden.str_nombre_beneficiario );
         plantillaContent = plantillaContent.Replace( "$dtt_fecha_ingresa$", orden.dtt_fecha_ingresa );

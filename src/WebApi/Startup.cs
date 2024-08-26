@@ -77,7 +77,7 @@ public static class Startup
 
         app.UseCors( "CorsPolicy" );
         app.UseAuthorizationMego();
-        app.UseJwtTokenMiddleware();
+        //app.UseJwtTokenMiddleware();
 
         app.UseRouting();
 

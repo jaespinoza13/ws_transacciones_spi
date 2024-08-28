@@ -3,6 +3,7 @@
 public class ResComun : Header
 {
     public string str_res_codigo { get; set; } = string.Empty;
+
     public string str_res_info_adicional { get; set; } = string.Empty;
 
     public void LlenarResHeader(Header header)

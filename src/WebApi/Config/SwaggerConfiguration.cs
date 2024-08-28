@@ -14,7 +14,7 @@ public static class SwaggerConfiguration
             {
                 Title = "Ws Transacciones SPI COOPMEGO",
                 Version = "v1",
-                Description = "Services for Ws Base Template",
+                Description = "Servicio de transacciones SPI COOPMEGO",
             });
             c.AddSecurityDefinition("Authorization-Mego", new OpenApiSecurityScheme
             {

@@ -4,6 +4,7 @@ namespace Application.Common.Converting;
 
 public static class Conversions
 {
+
     #region Métodos "Conversión de Conjunto de Datos a un objeto/Lista de una Clase"
 
     /// <summary>
@@ -15,6 +16,7 @@ public static class Conversions
     public static T ConvertToClass<T>(ConjuntoDatos conjuntoDatos, int table = 0)
     {
         var obj = default(T);
+
         foreach (var item in conjuntoDatos.LstTablas[table].LstFilas)
         {
             obj = (T)Converting.MapDictToObj( item.NombreValor, typeof(T) );
@@ -34,4 +36,5 @@ public static class Conversions
             .Select( item => (T)Converting.MapDictToObj( item.NombreValor, typeof(T) ) ).ToList();
 
     #endregion
+
 }

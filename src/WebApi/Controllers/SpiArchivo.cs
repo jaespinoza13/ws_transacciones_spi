@@ -18,19 +18,13 @@ namespace WebApi.Controllers;
 [ProducesResponseType( typeof(ResBadRequestException), (int)HttpStatusCode.BadRequest )]
 [ProducesResponseType( typeof(ResException), (int)HttpStatusCode.Unauthorized )]
 [ProducesResponseType( typeof(ResException), (int)HttpStatusCode.InternalServerError )]
-public class SpiArchivo : BaseController
+public class SpiArchivo(IMediator mediator) : BaseController
 {
-    private readonly IMediator _mediator;
-
-    public SpiArchivo(IMediator mediator)
-    {
-        _mediator = mediator;
-    }
 
     [HttpPost( "SET_GENERAR_SPI1" )]
     [ProducesResponseType( typeof(ResGenerarSpi1), (int)HttpStatusCode.OK )]
-    public async Task<ResGenerarSpi1> SetGenerarSpi1(ReqGenerarSpi1 request) => await _mediator.Send( request );
+    public async Task<ResGenerarSpi1> SetGenerarSpi1(ReqGenerarSpi1 request) => await mediator.Send( request );
     [HttpPost( "GET_TOTAL_OPI_SPI1" )]
     [ProducesResponseType( typeof(ResTotalOpiSpi1), (int)HttpStatusCode.OK )]
-    public async Task<ResTotalOpiSpi1> GetTotalOpiCorte(ReqTotalOpiSp1 request) => await _mediator.Send( request );
+    public async Task<ResTotalOpiSpi1> GetTotalOpiCorte(ReqTotalOpiSp1 request) => await mediator.Send( request );
 }

@@ -10,11 +10,12 @@ public static class CuadreOpis
     public static string GenerarCuadreOpis(ReqCuadreOpis request, IReadOnlyList<OrdenPago> list, ApiConfig apiConfig)
     {
         var pathPlantilla = $"{Directory.GetCurrentDirectory()}/{apiConfig.path_template_cuadre_opis}";
+        var pathLogo = $"{Directory.GetCurrentDirectory()}/{apiConfig.path_logo_png}";
         
         var total = list.Sum( x => Convert.ToDecimal( x.dec_monto )).ToString( "N2" );
         
         var plantillaContent = File.ReadAllText( pathPlantilla );
-        plantillaContent = plantillaContent.Replace( "$str_logo$", apiConfig.path_logo_png );
+        plantillaContent = plantillaContent.Replace( "$str_logo$", pathLogo );
         plantillaContent = plantillaContent.Replace( "$dtt_fecha$", request.dtt_fecha.ToString( "dd/MM/yyyy" ) );
         plantillaContent = plantillaContent.Replace( "$int_total_opis$", list.Count.ToString() );
         plantillaContent = plantillaContent.Replace( "$int_monto_total_opis$", total );

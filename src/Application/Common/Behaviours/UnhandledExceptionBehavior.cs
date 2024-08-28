@@ -3,18 +3,10 @@ using Microsoft.Extensions.Logging;
 
 namespace Application.Common.Behaviours;
 
-public class UnhandledExceptionBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : IRequest<TResponse>
+public class UnhandledExceptionBehavior<TRequest, TResponse>(ILogger<UnhandledExceptionBehavior<TRequest, TResponse>> logger) : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
 {
-    private readonly ILogger<UnhandledExceptionBehavior<TRequest, TResponse>> _logger;
 
-    public UnhandledExceptionBehavior(ILogger<UnhandledExceptionBehavior<TRequest, TResponse>> logger)
-    {
-        _logger = logger;
-    }
-
-    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next,
-        CancellationToken cancellationToken)
+    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
         try
         {
@@ -24,8 +16,7 @@ public class UnhandledExceptionBehavior<TRequest, TResponse> : IPipelineBehavior
         {
             var requestName = typeof(TRequest).Name;
 
-            _logger.LogError(ex, "Application Request: Sucedio una exception para el request {Name} {@Request}",
-                requestName, request);
+            logger.LogError( ex, "Application Request: Sucedio una exception para el request {Name} {@Request}", requestName, request );
 
             throw;
         }

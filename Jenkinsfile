@@ -7,8 +7,8 @@ pipeline {
     }
 
     environment {
-        VERSION_DESPLIEGUE  = '1.0.4'
-        VERSION_PRODUCCION  = '1.0.3'
+        VERSION_DESPLIEGUE  = '1.0.5'
+        VERSION_PRODUCCION  = '1.0.4'
         NOMBRE_CONTENEDOR   = 'cnt-ws-transacciones-spi'
         NOMBRE_IMAGEN       = 'img_ws_transacciones_spi'
         PUERTO              = '9031'

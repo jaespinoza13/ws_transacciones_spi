@@ -21,4 +21,7 @@ public class BuscarOpis
     public string str_tipo_transf { get; set; } = string.Empty;
     public string str_num_comprobante { get; set; } = string.Empty;
     public string str_planilla_contable { get; set; } = string.Empty;
+    public string str_usuario_rechaza { get; set; } = string.Empty;
+    public string str_usuario_aprueba { get; set; } = string.Empty;
+
 }

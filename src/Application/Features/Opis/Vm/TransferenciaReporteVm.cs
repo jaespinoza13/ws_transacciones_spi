@@ -20,4 +20,6 @@ public class TransferenciaReporteVm
     [DisplayName( "Canal Envío" )] public string str_tipo_transf { get; set; } = string.Empty;
     [DisplayName( "Estado Interno" )] public string str_estado_opi { get; set; } = string.Empty;
     [DisplayName( "Estado" )] public string str_estado { get; set; } = string.Empty;
+    [DisplayName( "Usuario Rechaza" )] public string str_usuario_rechaza { get; set; } = string.Empty;
+    [DisplayName( "Usuario Aprueba" )] public string str_usuario_aprueba { get; set; } = string.Empty;
 }

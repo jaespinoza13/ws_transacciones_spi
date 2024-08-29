@@ -76,6 +76,12 @@ public class ApiConfig
     public string server_interno_email { get; set; } = null!;
 
     public string puerto_interno_email { get; set; } = null!;
+    public string correo_email_in { get; set; } = null!;
+    public string usuario_email_in { get; set; } = null!;
+    public string pass_email_in { get; set; } = null!;
+    public string certificado_ssl {  get; set; } = null!;
+    public int pruebas_notificacion { get; set; } 
+    public string email_pruebas { get; set; } = null!;
 
     public string path_logo_png { get; set; } = null!;
 
